@@ -41,11 +41,13 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 
   <include file="$(find husky_gazebo)/launch/spawn_husky.launch">
     <arg name="laser_enabled" value="$(arg laser_enabled)"/>
-   <!--<arg name="kinect_enabled" value="$(arg kinect_enabled)"/>
-    <arg name="x" value="6.32" /> -->
+    <arg name="kinect_enabled" value="$(arg kinect_enabled)"/>
     <arg name="y" value="8.0" />
     <arg name="z" value="0.24" />
     <arg name="yaw" value="0.0" />
   </include>
+   
+    <remap from="cmd_vel" to="husky_velocity_controller/cmd_vel" />
+    <node name="publish_node" pkg="autonomous_husky" type="publisher.py" />
 
 </launch>

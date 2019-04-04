@@ -14,7 +14,7 @@ def commander(v, w):
 if __name__ == '__main__':
     pub = rospy.Publisher('cmd_vel',Twist,queue_size=1)
     rospy.init_node('publisher')
-    v=1; w = 2
+    v = 2; w = 0
     try:
         while not rospy.is_shutdown():
             commander(v,w)
