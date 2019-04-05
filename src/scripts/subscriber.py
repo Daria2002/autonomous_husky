@@ -16,6 +16,7 @@ import copy
 import numpy as np
 from scipy.ndimage import filters
 import matplotlib.pyplot as plt
+from geometry_msgs.msg import Twist
 # OpenCV
 import cv2
 
@@ -35,7 +36,7 @@ class image_feature:
 
     def __init__(self):
         # self.bridge = CvBridge()
-
+        
         # subscribed Topic
         self.subscriber = rospy.Subscriber("morus/camera1/image_raw/compressed",
             CompressedImage, self.callback,  queue_size = 1)
@@ -45,7 +46,7 @@ class image_feature:
 
 
     def callback(self, ros_data):
-        
+        print('u callback funkciji')
         '''Callback function of subscribed topic. 
         Here images get converted and features detected'''
         if VERBOSE :
@@ -73,7 +74,7 @@ class image_feature:
             x,y = featpoint.pt
             cv2.circle(image_np,(int(x),int(y)), 3, (0,0,255), -1)
         
-        cv2.imshow('cv_img', image_np)
+        cv2.imshow('cv_image', image_np)
         cv2.waitKey(2)
 
         inputImage = scipy.misc.toimage(image_np)
@@ -101,11 +102,51 @@ class image_feature:
         line_img, theta_deg, theta_rad = draw_hough_lines(lines, copy.deepcopy(inputImage), image_np)
         
         print(theta_deg)
+        
+        followLine(theta_deg)
+
         #plt.subplot(334)
         #plt.imshow(line_img)
 
         #plt.tight_layout()
         #plt.show()
+
+def followLine(angle_deg):
+    pub = rospy.Publisher('husky_velocity_controller/cmd_vel',Twist,queue_size=1)
+    #rospy.init_node('publisher_line_detection')
+    
+    l_x = 2    
+    l_y = 0
+    l_z = 0
+    
+    a_x = 0
+    a_y = 0
+    if(angle_deg > 70 and angle_deg < 110):
+        a_z = 0
+    else:
+        a_z = -1
+    print(angle_deg)
+    commander(l_x, l_y, l_z, a_x, a_y, a_z, pub)
+    
+    #try:
+    #    while not rospy.is_shutdown():
+    #        commander(l_x, l_y, l_z, a_x, a_y, a_z, pub)
+    #except rospy.ROSInterruptException:
+    #    pass
+
+def commander(l_x, l_y, l_z, a_x, a_y, a_z,pub):
+    #while not rospy.is_shutdown():
+    vel = Twist();
+    vel.linear.x = l_x;
+    vel.linear.y = l_y;
+    vel.linear.z = l_z;
+    
+    vel.angular.x = a_x;
+    vel.angular.y = a_y;
+    vel.angular.z = a_z;
+    pub.publish(vel);
+    rospy.sleep(1.0);
+
 
 def get_points(rho, theta):
         a = np.cos(theta)
@@ -160,14 +201,17 @@ def draw_hough_lines(lines, img, image_np):
             
             #print("Best theta: ", theta * 180 / np.pi)
             theta_deg = theta * 180 / np.pi
+        else:
+            theta_deg = theta * 180 / np.pi 
         #print("/n/n")
         #theta is in rad
         return img, theta_deg, theta
 
 def main(args):
     '''Initializes and cleanup ros node'''
+    rospy.init_node('publisher_line_detection')
     ic = image_feature()
-    rospy.init_node('image_feature', anonymous=True)
+    #rospy.init_node('image_feature', anonymous=True)
     try:
         rospy.spin()
     except KeyboardInterrupt:
