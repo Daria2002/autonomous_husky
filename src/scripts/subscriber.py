@@ -1,98 +1,45 @@
 #!/usr/bin/env python
-"""OpenCV feature detectors with ros CompressedImage Topics in python.
-
-This example subscribes to a ros topic containing sensor_msgs 
-CompressedImage. It converts the CompressedImage into a numpy.ndarray, 
-then detects and marks features in that image. It finally displays 
-and publishes the new image - again as CompressedImage topic.
-"""
-__author__ =  'Simon Haller <simon.haller at uibk.ac.at>'
-__version__=  '0.1'
-__license__ = 'BSD'
-# Python libs
 import sys, time
 import copy
-# numpy and scipy
 import numpy as np
 from scipy.ndimage import filters
 import matplotlib.pyplot as plt
 from geometry_msgs.msg import Twist
-# OpenCV
 import cv2
-
 import scipy.misc
-# Ros libraries
 import roslib
 import rospy
-
-# Ros Messages
 from sensor_msgs.msg import CompressedImage
-# We do not use cv_bridge it does not support CompressedImage in python
-# from cv_bridge import CvBridge, CvBridgeError
 
-VERBOSE=False
-
-class image_feature:
+class line_detector_and_follower:
 
     def __init__(self):
-        # self.bridge = CvBridge()
-        
-        # subscribed Topic
+        """
+        Constructor for line_detector_and_follower initialize
+        subscriber and publisher
+        """
+
+        # make subscriber to topic with messages from camera
         self.subscriber = rospy.Subscriber("morus/camera1/image_raw/compressed",
             CompressedImage, self.callback,  queue_size = 1)
-        
-        if VERBOSE :
-            print "subscribed to /camera/image/compressed"
+        # publisher
+        self.pub = rospy.Publisher('husky_velocity_controller/cmd_vel', Twist,queue_size=1)
 
 
     def callback(self, ros_data):
-        print('u callback funkciji')
-        '''Callback function of subscribed topic. 
-        Here images get converted and features detected'''
-        if VERBOSE :
-            print 'received image of type: "%s"' % ros_data.format
+        """
+        Callback function for subscriber. This function will execute when
+        new message come.
+        """
 
-        #### direct conversion to CV2 ####
+        # converts string to array
         np_arr = np.fromstring(ros_data.data, np.uint8)
-        image_np = cv2.imdecode(np_arr, cv2.IMREAD_COLOR) # OpenCV >= 3.0:
-        
-        #### Feature detectors using CV2 #### 
-        # "","Grid","Pyramid" + 
-        # "FAST","GFTT","HARRIS","MSER","ORB","SIFT","STAR","SURF"
-        feat_det = cv2.ORB_create()
-        time1 = time.time()
-
-        # convert np image to grayscale
-        featPoints = feat_det.detect(
-            cv2.cvtColor(image_np, cv2.COLOR_BGR2GRAY))
-        time2 = time.time()
-        if VERBOSE :
-            print '%s detector found: %s points in: %s sec.'%(method,
-                len(featPoints),time2-time1)
-
-        for featpoint in featPoints:
-            x,y = featpoint.pt
-            cv2.circle(image_np,(int(x),int(y)), 3, (0,0,255), -1)
-        
-        cv2.imshow('cv_image', image_np)
-        cv2.waitKey(2)
-
+        # reads an image from a buffer in memory
+        image_np = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
         inputImage = scipy.misc.toimage(image_np)
     
-        
-        plt.imshow(inputImage)
-
-        # gray_image = cv2.cvtColor(inputImage, cv2.COLOR_BGR2GRAY)
-        # plt.subplot(332)
-        # plt.imshow(gray_image, cmap="gray")
-
         blur = cv2.medianBlur(image_np, 5)
-        plt.subplot(335)
-        plt.imshow(inputImage, cmap="gray")
-
         edges = cv2.Canny(blur, 150, 270)
-        plt.subplot(333)
-        plt.imshow(edges, cmap="gray")
         edges = cv2.dilate(edges, None)
 
         # TODO: Try different parameters
@@ -103,19 +50,11 @@ class image_feature:
         
         print(theta_deg)
         
-        followLine(theta_deg)
-
-        #plt.subplot(334)
-        #plt.imshow(line_img)
-
-        #plt.tight_layout()
-        #plt.show()
+        vel = followLine(theta_deg)
+        self.pub.publish(vel)
 
 def followLine(angle_deg):
-    pub = rospy.Publisher('husky_velocity_controller/cmd_vel',Twist,queue_size=1)
-    #rospy.init_node('publisher_line_detection')
-    
-    l_x = 2    
+    l_x = 0.2
     l_y = 0
     l_z = 0
     
@@ -123,100 +62,98 @@ def followLine(angle_deg):
     a_y = 0
     if(angle_deg > 70 and angle_deg < 110):
         a_z = 0
+    elif(angle_deg < 70):
+        a_z = -0.2
     else:
-        a_z = -1
+        a_z = 0.2
     print(angle_deg)
-    commander(l_x, l_y, l_z, a_x, a_y, a_z, pub)
-    
-    #try:
-    #    while not rospy.is_shutdown():
-    #        commander(l_x, l_y, l_z, a_x, a_y, a_z, pub)
-    #except rospy.ROSInterruptException:
-    #    pass
 
-def commander(l_x, l_y, l_z, a_x, a_y, a_z,pub):
-    #while not rospy.is_shutdown():
-    vel = Twist();
-    vel.linear.x = l_x;
-    vel.linear.y = l_y;
-    vel.linear.z = l_z;
+    return commander(l_x, l_y, l_z, a_x, a_y, a_z)
     
-    vel.angular.x = a_x;
-    vel.angular.y = a_y;
-    vel.angular.z = a_z;
-    pub.publish(vel);
-    rospy.sleep(1.0);
+def commander(l_x, l_y, l_z, a_x, a_y, a_z):
+    vel = Twist()
+    vel.linear.x = l_x
+    vel.linear.y = l_y
+    vel.linear.z = l_z
+    
+    vel.angular.x = a_x
+    vel.angular.y = a_y
+    vel.angular.z = a_z
 
+    return vel
 
 def get_points(rho, theta):
-        a = np.cos(theta)
-        b = np.sin(theta)
-        x0 = a * rho
-        y0 = b * rho
-        x1 = int(x0 + 2000 * (-b))
-        y1 = int(y0 + 2000 * (a))
-        x2 = int(x0 - 2000 * (-b))
-        y2 = int(y0 - 2000 * (a))
+    a = np.cos(theta)
+    b = np.sin(theta)
+    x0 = a * rho
+    y0 = b * rho
+    x1 = int(x0 + 2000 * (-b))
+    y1 = int(y0 + 2000 * (a))
+    x2 = int(x0 - 2000 * (-b))
+    y2 = int(y0 - 2000 * (a))
 
-        return x1, y1, x2, y2
+    return x1, y1, x2, y2
 
 def draw_hough_lines(lines, img, image_np):
-        """
-        Draw Hough lines on the given image
-        :param lines: Line array.
-        :param img: Given image.
-        :return: Image with drawn lines
-        """
+    """
+    Draw Hough lines on the given image
+    :param lines: Line array.
+    :param img: Given image.
+    :return: Image with drawn lines
+    """
 
-        r_acc = 0
-        theta_acc = 0
-        accepted_count = 0
+    r_acc = 0
+    theta_acc = 0
+    accepted_count = 0
 
-        for line in lines:
+    for line in lines:
+        # Extract line info
+        r = line[0][0]
+        theta = line[0][1]
 
-            # Extract line info
-            r = line[0][0]
-            theta = line[0][1]
+        x1, y1, x2, y2 = get_points(r, theta)
+        cv2.line(image_np, (x1, y1), (x2, y2), (0, 0, 255), 3)
+        # Check if line is accepted as good
+        # f r > 0 and temp_theta > 0 and temp_theta < 0 or r < 0 and temp_theta < 180 and temp_theta > 150:
+        #print(theta * 180 / np.pi, r)
 
-            x1, y1, x2, y2 = get_points(r, theta)
-            cv2.line(image_np, (x1, y1), (x2, y2), (0, 0, 255), 3)
-            # Check if line is accepted as good
-            # f r > 0 and temp_theta > 0 and temp_theta < 0 or r < 0 and temp_theta < 180 and temp_theta > 150:
-            #print(theta * 180 / np.pi, r)
-            # Check if line is accepted as good
+        # Check if line is accepted as good
+        if -60 < abs(abs(theta * 180 / np.pi) - 90) < 20:
+            continue
 
-            if -60<abs(abs(theta * 180 / np.pi) - 90) < 20:
-                continue
+        accepted_count += 1
+        r_acc += r
+        theta_acc += theta
 
-            accepted_count += 1
-            r_acc += r
-            theta_acc += theta
+    # Plot average accepted
+    if accepted_count > 0:
+        theta = theta_acc / accepted_count
+        r = r_acc / accepted_count
+        x1, y1, x2, y2 = get_points(r, theta)
+        cv2.line(image_np, (x1, y1), (x2, y2), (255, 0, 0), 10)
+        theta_deg = theta * 180 / np.pi
 
-        # Plot average accepted
-        if accepted_count > 0:
-            theta = theta_acc / accepted_count
-            r = r_acc / accepted_count
-            x1, y1, x2, y2 = get_points(r, theta)
-            cv2.line(image_np, (x1, y1), (x2, y2), (255, 0, 0), 10)
-            
-            #print("Best theta: ", theta * 180 / np.pi)
-            theta_deg = theta * 180 / np.pi
-        else:
-            theta_deg = theta * 180 / np.pi 
-        #print("/n/n")
-        #theta is in rad
-        return img, theta_deg, theta
+    else:
+        theta_deg = theta * 180 / np.pi 
+
+    #theta is in rad
+    return img, theta_deg, theta
 
 def main(args):
-    '''Initializes and cleanup ros node'''
+    """
+    Main function is run when program is executed
+    """
+
+    # node initialization
     rospy.init_node('publisher_line_detection')
-    ic = image_feature()
-    #rospy.init_node('image_feature', anonymous=True)
+    detectorAndFollower = line_detector_and_follower()
+
     try:
+        # rospy.spin() lets all the callbacks get called for subscribers
         rospy.spin()
     except KeyboardInterrupt:
         print "Shutting down ROS Image feature detector module"
-    cv2.destroyAllWindows()
+        cv2.destroyAllWindows()
 
 if __name__ == '__main__':
     main(sys.argv)
