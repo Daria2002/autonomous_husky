@@ -35,16 +35,18 @@ class image_feature:
     def __init__(self):
         # self.bridge = CvBridge()
 
+
+        # topic where we publish
+        self.image_pub = rospy.Publisher("/output/image_raw/compressed",
+            CompressedImage)
         # subscribed Topic
         self.subscriber = rospy.Subscriber("morus/camera1/image_raw/compressed",
             CompressedImage, self.callback,  queue_size = 1)
-        print('ok')
         if VERBOSE :
             print "subscribed to /camera/image/compressed"
 
 
     def callback(self, ros_data):
-        print('ok je ')
         '''Callback function of subscribed topic. 
         Here images get converted and features detected'''
         if VERBOSE :
@@ -91,8 +93,8 @@ class image_feature:
 
 def main(args):
     '''Initializes and cleanup ros node'''
-    ic = image_feature()
     rospy.init_node('image_feature', anonymous=True)
+    ic = image_feature()
     try:
         rospy.spin()
     except KeyboardInterrupt:
