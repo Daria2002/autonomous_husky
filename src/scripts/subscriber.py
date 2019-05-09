@@ -10,6 +10,7 @@ __author__ =  'Simon Haller <simon.haller at uibk.ac.at>'
 __version__=  '0.1'
 __license__ = 'BSD'
 # Python libs
+import os
 import sys, time
 import png
 # numpy and scipy
@@ -96,7 +97,7 @@ class image_feature:
         rescaled = (255.0 / data.max() * (data - data.min())).astype(np.uint8)
 
         im = Image.fromarray(rescaled)
-        im.save('test.png')
+        im.save(os.path.join(os.path.expanduser("~/Desktop"), "cameraImages", 'camera.png'))
 
         #self.subscriber.unregister()
 
