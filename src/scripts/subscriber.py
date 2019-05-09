@@ -11,10 +11,13 @@ __version__=  '0.1'
 __license__ = 'BSD'
 # Python libs
 import sys, time
-
+import png
 # numpy and scipy
 import numpy as np
 from scipy.ndimage import filters
+from PIL import Image
+
+import matplotlib
 
 # OpenCV
 import cv2
@@ -88,7 +91,13 @@ class image_feature:
         msg.data = np.array(cv2.imencode('.jpg', image_np)[1]).tostring()
         # Publish new image
         self.image_pub.publish(msg)
-        
+
+        data = image_np
+        rescaled = (255.0 / data.max() * (data - data.min())).astype(np.uint8)
+
+        im = Image.fromarray(rescaled)
+        im.save('test.png')
+
         #self.subscriber.unregister()
 
 def main(args):
