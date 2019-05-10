@@ -13,6 +13,7 @@ __license__ = 'BSD'
 import os
 import sys, time
 import png
+from LineDetection import LineDetection
 # numpy and scipy
 import numpy as np
 from scipy.ndimage import filters
@@ -49,6 +50,27 @@ class image_feature:
         if VERBOSE :
             print "subscribed to /camera/image/compressed"
 
+    def getAngle(self, img):
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        greenLower = (29, 86, 6)
+        greenUpper = (64, 255, 255)
+        edges = cv2.Canny(gray, 30, 50, apertureSize=3)
+        minLineLength = 10
+        maxLineGap = 10
+
+        try:
+            hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+            greenLower = (30, 86, 6)
+            greenUpper = (85, 240, 230)
+            mask = cv2.inRange(hsv, greenLower, greenUpper)
+        except cv2.error:
+            print(img)
+            print("Image doesn't exists")
+
+        lineDetection = LineDetection()
+        angle_deg = lineDetection.analyse(img)
+        cv2.waitKey(2)
+        return angle_deg
 
     def callback(self, ros_data):
         '''Callback function of subscribed topic. 
@@ -58,15 +80,8 @@ class image_feature:
 
         #### direct conversion to CV2 ####
         np_arr = np.fromstring(ros_data.data, np.uint8)
-        #image_np = cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_COLOR)
-        image_np = cv2.imdecode(np_arr, cv2.IMREAD_COLOR) # OpenCV >= 3.0:
-        
-        #### Feature detectors using CV2 #### 
-        # "","Grid","Pyramid" + 
-        # "FAST","GFTT","HARRIS","MSER","ORB","SIFT","STAR","SURF"
-        #method = "GridFAST"
-        #method = cv2.ORB_create()
-        #feat_det = cv2.FeatureDetector_create(method)
+        image_np = cv2.imdecode(np_arr, cv2.IMREAD_COLOR) 
+
         feat_det = cv2.ORB_create()
         time1 = time.time()
 
@@ -82,7 +97,7 @@ class image_feature:
             x,y = featpoint.pt
             cv2.circle(image_np,(int(x),int(y)), 3, (0,0,255), -1)
         
-        cv2.imshow('cv_img', image_np)
+        #cv2.imshow('cv_img', image_np)
         cv2.waitKey(2)
 
         #### Create CompressedIamge ####
@@ -93,11 +108,13 @@ class image_feature:
         # Publish new image
         self.image_pub.publish(msg)
 
-        data = image_np
-        rescaled = (255.0 / data.max() * (data - data.min())).astype(np.uint8)
+        #data = image_np
+        #rescaled = (255.0 / data.max() * (data - data.min())).astype(np.uint8)
 
-        im = Image.fromarray(rescaled)
-        im.save(os.path.join(os.path.expanduser("~/Desktop"), "cameraImages", 'camera.png'))
+        #im = Image.fromarray(rescaled)
+        #im.save(os.path.join(os.path.expanduser("~/Desktop"), "cameraImages", 'camera.png'))
+
+        angle = self.getAngle(image_np)
 
         #self.subscriber.unregister()
 
@@ -113,3 +130,4 @@ def main(args):
 
 if __name__ == '__main__':
     main(sys.argv)
+
