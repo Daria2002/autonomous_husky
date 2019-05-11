@@ -1,14 +1,5 @@
 #!/usr/bin/env python
-"""OpenCV feature detectors with ros CompressedImage Topics in python.
 
-This example subscribes to a ros topic containing sensor_msgs 
-CompressedImage. It converts the CompressedImage into a numpy.ndarray, 
-then detects and marks features in that image. It finally displays 
-and publishes the new image - again as CompressedImage topic.
-"""
-__author__ =  'Simon Haller <simon.haller at uibk.ac.at>'
-__version__=  '0.1'
-__license__ = 'BSD'
 # Python libs
 import os
 import sys, time
@@ -41,10 +32,16 @@ class image_feature:
 
     def __init__(self):
         # subscribed Topic
-        self.subscriber = rospy.Subscriber("morus/camera1/image_raw/compressed",
+        self.subscriber = rospy.Subscriber("husky/camera1/image_raw/compressed",
             CompressedImage, self.callback,  queue_size = 10)
+
+        self.image_pub = rospy.Publisher(
+            "/output/image_raw/compressed",
+            CompressedImage,
+            queue_size=1)
+
         if VERBOSE :
-            print "subscribed to /camera/image/compressed"
+            print ("subscribed to /camera/image/compressed")
 
     def getAngle(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -72,7 +69,7 @@ class image_feature:
         '''Callback function of subscribed topic. 
         Here images get converted and features detected'''
         if VERBOSE :
-            print 'received image of type: "%s"' % ros_data.format
+            print ('received image of type: "%s"' % ros_data.format)
 
         #### direct conversion to CV2 ####
         np_arr = np.fromstring(ros_data.data, np.uint8)
@@ -85,9 +82,9 @@ class image_feature:
         featPoints = feat_det.detect(
             cv2.cvtColor(image_np, cv2.COLOR_BGR2GRAY))
         time2 = time.time()
-        if VERBOSE :
-            print '%s detector found: %s points in: %s sec.'%(method,
-                len(featPoints),time2-time1)
+        #if VERBOSE :
+        #    print ('%s detector found: %s points in: %s sec.'%(method,
+        #        len(featPoints),time2-time1))
 
         for featpoint in featPoints:
             x,y = featpoint.pt
@@ -95,8 +92,8 @@ class image_feature:
     
         edges = cv2.Canny(image_np, 130, 200, apertureSize=3)
 
-        im = Image.fromarray(image_np)
-        im.save(time.strftime("%Y%m%d-%H%M%S"), "jpeg")
+        #im = Image.fromarray(image_np)
+        # im.save(time.strftime("%Y%m%d-%H%M%S"), "jpeg")
 
         # TODO: Try different parameters
         lines = cv2.HoughLines(edges, 1, np.pi / 180, 25, 100, 10)
@@ -106,7 +103,16 @@ class image_feature:
             print("CameraProcessing.run() - no lines found")
             avg_theta = 500
 
-        avg = self.draw_hough_lines(lines, image_np)
+        avg, img = self.draw_hough_lines(lines, image_np)
+
+        # Create published image
+        msg = CompressedImage()
+        msg.header.stamp = rospy.Time.now()
+        msg.format = "jpeg"
+        msg.data = np.array(cv2.imencode('.jpg', img)[1]).tostring()
+
+        # Publish new image
+        self.image_pub.publish(msg)
 
         print(avg)
         #self.subscriber.unregister()
@@ -138,12 +144,13 @@ class image_feature:
             y1 = int(y0 + 2000*(a))
             x2 = int(x0 - 2000*(-b))
             y2 = int(y0 - 2000*(a))
- 
+
+            cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 5)
             avg_theta += math.atan2(y1-y2, x1-x2)
 
         avg_theta /= len(lines)
  
-        return avg_theta * 180/math.pi
+        return avg_theta * 180/math.pi, img
 
 def main(args):
     '''Initializes and cleanup ros node'''
@@ -152,9 +159,8 @@ def main(args):
     try:
         rospy.spin()
     except KeyboardInterrupt:
-        print "Shutting down ROS Image feature detector module"
+        print ("Shutting down ROS Image feature detector module")
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
     main(sys.argv)
-
