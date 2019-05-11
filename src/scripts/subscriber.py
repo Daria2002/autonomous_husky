@@ -31,6 +31,8 @@ VERBOSE=False
 class image_feature:
 
     def __init__(self):
+        self.curr_cam = None
+
         # subscribed Topic
         self.subscriber = rospy.Subscriber("husky/camera1/image_raw/compressed",
             CompressedImage, self.callback,  queue_size = 10)
@@ -43,38 +45,19 @@ class image_feature:
         if VERBOSE :
             print ("subscribed to /camera/image/compressed")
 
-    def getAngle(self, img):
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        greenLower = (29, 86, 6)
-        greenUpper = (64, 255, 255)
-        edges = cv2.Canny(gray, 30, 50, apertureSize=3)
-        minLineLength = 10
-        maxLineGap = 10
+    def process(self):
+        if self.curr_cam is None:
+            print("Initialize self.curr_cam")
+            return
 
-        try:
-            hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-            greenLower = (30, 86, 6)
-            greenUpper = (85, 240, 230)
-            mask = cv2.inRange(hsv, greenLower, greenUpper)
-        except cv2.error:
-            print(img)
-            print("Image doesn't exists")
-
-        lineDetection = LineDetection()
-        angle_deg = lineDetection.analyse(img)
-        cv2.waitKey(2)
-        return angle_deg
-
-    def callback(self, ros_data):
-        '''Callback function of subscribed topic. 
-        Here images get converted and features detected'''
         if VERBOSE :
             print ('received image of type: "%s"' % ros_data.format)
 
         #### direct conversion to CV2 ####
-        np_arr = np.fromstring(ros_data.data, np.uint8)
+        np_arr = np.fromstring(self.curr_cam, np.uint8)
+        
         image_np = cv2.imdecode(np_arr, cv2.COLOR_BGR2GRAY) 
-
+        image_orig = image_np
         feat_det = cv2.ORB_create()
         time1 = time.time()
 
@@ -90,20 +73,27 @@ class image_feature:
             x,y = featpoint.pt
             cv2.circle(image_np,(int(x),int(y)), 3, (0,0,255), -1)
     
-        edges = cv2.Canny(image_np, 130, 200, apertureSize=3)
+
+
+        greenLower = (40, 40, 40)
+        greenUpper = (70, 255, 255)
+
+        image_np = cv2.inRange(image_np, greenLower, greenUpper)
+
+        edges = cv2.Canny(image_np, 100, 150, apertureSize=3)
 
         #im = Image.fromarray(image_np)
         # im.save(time.strftime("%Y%m%d-%H%M%S"), "jpeg")
 
         # TODO: Try different parameters
-        lines = cv2.HoughLines(edges, 1, np.pi / 180, 25, 100, 10)
-
+        #lines = cv2.HoughLines(edges, 1, np.pi / 180, 25, 100, 10)
+        lines = cv2.HoughLines(edges, 1, np.pi / 180, 50, None, 50, 100)
         # If no lines are found punish and continue
         if lines is None:
             print("CameraProcessing.run() - no lines found")
             avg_theta = 500
 
-        avg, img = self.draw_hough_lines(lines, image_np)
+        avg, img = self.draw_hough_lines(lines, image_np, image_orig)
 
         # Create published image
         msg = CompressedImage()
@@ -117,7 +107,12 @@ class image_feature:
         print(avg)
         #self.subscriber.unregister()
 
-    def draw_hough_lines(self, lines, img):
+
+    def callback(self, ros_data):
+        self.curr_cam = ros_data.data
+        
+
+    def draw_hough_lines(self, lines, img, orig_img):
         """
        Draw Hough lines on the given image
  
@@ -145,21 +140,24 @@ class image_feature:
             x2 = int(x0 - 2000*(-b))
             y2 = int(y0 - 2000*(a))
 
-            cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 5)
+            cv2.line(orig_img, (x1, y1), (x2, y2), (0, 0, 255), 5)
             avg_theta += math.atan2(y1-y2, x1-x2)
+
+        print(len(lines))
 
         avg_theta /= len(lines)
  
-        return avg_theta * 180/math.pi, img
+        return avg_theta * 180/math.pi, orig_img
 
 def main(args):
     '''Initializes and cleanup ros node'''
     rospy.init_node('image_feature', anonymous=True)
     ic = image_feature()
-    try:
-        rospy.spin()
-    except KeyboardInterrupt:
-        print ("Shutting down ROS Image feature detector module")
+    
+    while not rospy.is_shutdown():
+        ic.process()
+        rospy.sleep(0.05)
+
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
