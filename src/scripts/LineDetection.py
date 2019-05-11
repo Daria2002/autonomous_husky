@@ -45,6 +45,16 @@ class LineDetection:
             theta = line[0][1]
 
             x1, y1, x2, y2 = self.get_points(r, theta)
+
+            print("x1")
+            print(x1)
+            print("x2")
+            print(x2)
+            print("y1")
+            print(y1)
+            print("y2")
+            print(y2)
+
             cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 3)
             # Check if line is accepted as good
             # f r > 0 and temp_theta > 0 and temp_theta < 0 or r < 0 and temp_theta < 180 and temp_theta > 150:
@@ -95,27 +105,22 @@ class LineDetection:
         new = edges.copy()
 
         thetas = []
+        line = lines[0]
 
-        for line in lines:
-            for rho, theta in line:
-                a = np.cos(theta)
-                b = np.sin(theta)
-                x0 = a * rho
-                y0 = b * rho
-                x1 = int(x0 + 1000 * (-b))
-                y1 = int(y0 + 1000 * (a))
-                x2 = int(x0 - 1000 * (-b))
-                y2 = int(y0 - 1000 * (a))
-                if theta > np.pi / 3 and theta < np.pi * 2 / 3:
-                    thetas.append(theta)
-                    new = cv2.line(new, (x1, y1), (x2, y2), (255, 255, 255), 1)
+        help = line[0]
+        rho = help[0]
+        theta = help[1]
 
-        theta_mean = np.mean(thetas)
+        x1, y1, x2, y2 = self.get_points(rho, theta)
 
-        if(len(thetas) > 0):
-            theta = self.rad_to_deg(theta_mean)
-        else :
-            theta = 0
+        print("x1")
+        print(x1)
+        print("x2")
+        print(x2)
+        print("y1")
+        print(y1)
+        print("y2")
+        print(y2)
 
         print(theta)
 

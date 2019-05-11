@@ -13,6 +13,8 @@ __license__ = 'BSD'
 import os
 import sys, time
 import png
+import math
+
 from LineDetection import LineDetection
 # numpy and scipy
 import numpy as np
@@ -38,15 +40,9 @@ VERBOSE=False
 class image_feature:
 
     def __init__(self):
-        # self.bridge = CvBridge()
-
-
-        # topic where we publish
-        self.image_pub = rospy.Publisher("/output/image_raw/compressed",
-            CompressedImage)
         # subscribed Topic
         self.subscriber = rospy.Subscriber("morus/camera1/image_raw/compressed",
-            CompressedImage, self.callback,  queue_size = 1)
+            CompressedImage, self.callback,  queue_size = 10)
         if VERBOSE :
             print "subscribed to /camera/image/compressed"
 
@@ -80,7 +76,7 @@ class image_feature:
 
         #### direct conversion to CV2 ####
         np_arr = np.fromstring(ros_data.data, np.uint8)
-        image_np = cv2.imdecode(np_arr, cv2.IMREAD_COLOR) 
+        image_np = cv2.imdecode(np_arr, cv2.COLOR_BGR2GRAY) 
 
         feat_det = cv2.ORB_create()
         time1 = time.time()
@@ -96,27 +92,58 @@ class image_feature:
         for featpoint in featPoints:
             x,y = featpoint.pt
             cv2.circle(image_np,(int(x),int(y)), 3, (0,0,255), -1)
-        
-        #cv2.imshow('cv_img', image_np)
-        cv2.waitKey(2)
+    
+        edges = cv2.Canny(image_np, 130, 200, apertureSize=3)
 
-        #### Create CompressedIamge ####
-        msg = CompressedImage()
-        msg.header.stamp = rospy.Time.now()
-        msg.format = "jpeg"
-        msg.data = np.array(cv2.imencode('.jpg', image_np)[1]).tostring()
-        # Publish new image
-        self.image_pub.publish(msg)
+        im = Image.fromarray(image_np)
+        im.save(time.strftime("%Y%m%d-%H%M%S"), "jpeg")
 
-        #data = image_np
-        #rescaled = (255.0 / data.max() * (data - data.min())).astype(np.uint8)
+        # TODO: Try different parameters
+        lines = cv2.HoughLines(edges, 1, np.pi / 180, 25, 100, 10)
 
-        #im = Image.fromarray(rescaled)
-        #im.save(os.path.join(os.path.expanduser("~/Desktop"), "cameraImages", 'camera.png'))
+        # If no lines are found punish and continue
+        if lines is None:
+            print("CameraProcessing.run() - no lines found")
+            avg_theta = 500
 
-        angle = self.getAngle(image_np)
+        avg = self.draw_hough_lines(lines, image_np)
 
+        print(avg)
         #self.subscriber.unregister()
+
+    def draw_hough_lines(self, lines, img):
+        """
+       Draw Hough lines on the given image
+ 
+       :param lines: Line array.
+       :param img: Given image.
+ 
+       :return: Image with drawn lines
+       """
+ 
+        avg_theta = 0
+        for line in lines:
+            # Extract line info
+
+            rho = line[0][0]
+            theta = line[0][1]
+            #theta_temp = abs(theta - math.pi/2)
+            #avg_theta += (theta_temp - math.pi/2)**4
+
+            a = np.cos(theta)
+            b = np.sin(theta)
+            x0 = a*rho
+            y0 = b*rho
+            x1 = int(x0 + 2000*(-b))
+            y1 = int(y0 + 2000*(a))
+            x2 = int(x0 - 2000*(-b))
+            y2 = int(y0 - 2000*(a))
+ 
+            avg_theta += math.atan2(y1-y2, x1-x2)
+
+        avg_theta /= len(lines)
+ 
+        return avg_theta * 180/math.pi
 
 def main(args):
     '''Initializes and cleanup ros node'''
