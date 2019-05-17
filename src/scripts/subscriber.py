@@ -92,8 +92,11 @@ class image_feature:
         if lines is None:
             print("CameraProcessing.run() - no lines found")
             avg_theta = 500
-
-        avg, img = self.draw_hough_lines(lines, image_np, image_orig)
+        try:
+            avg, img = self.draw_hough_lines(lines, image_np, image_orig)
+        except:
+            print("There is no detected line.")
+            return
 
         # Create published image
         msg = CompressedImage()
@@ -146,7 +149,7 @@ class image_feature:
         print(len(lines))
 
         avg_theta /= len(lines)
- 
+
         return avg_theta * 180/math.pi, orig_img
 
 def main(args):
