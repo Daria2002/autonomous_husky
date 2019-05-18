@@ -5,6 +5,7 @@ import os
 import sys, time
 import png
 import math
+from sklearn.cluster import KMeans
 
 from LineDetection import LineDetection
 # numpy and scipy
@@ -20,6 +21,7 @@ import cv2
 # Ros libraries
 import roslib
 import rospy
+from math import sqrt
 
 # Ros Messages
 from sensor_msgs.msg import CompressedImage
@@ -56,25 +58,55 @@ class image_feature:
         #### direct conversion to CV2 ####
         np_arr = np.fromstring(self.curr_cam, np.uint8)
         
-        image_np = cv2.imdecode(np_arr, cv2.COLOR_BGR2GRAY) 
+        image_np = cv2.imdecode(np_arr, cv2.COLOR_BGR2RGB)
 
         h = np.size(image_np, 0)
         w = np.size(image_np, 1)
 
         w, h = image_np.shape[:2]
-        image_np = image_np[h/4:3*h/4, 0:w].copy()
+        image_np = image_np[3*h/4:h, 0:w].copy()
 
         image_orig = image_np
 
-        greenLower = (25, 52, 72)
-        greenUpper = (102, 255, 255)
+        # Do the kmeans
+        image = image_np.reshape((image_np.shape[0] * image_np.shape[1], 3))
+        clt = KMeans(n_clusters = 5)
+        clt.fit(image[0::10])
+        print("Center clusters:", clt.cluster_centers_)
+        
+        diff = 0
+        ind = -1
+        for i, c in enumerate(clt.cluster_centers_):
+            d = sqrt( ( c[0] - c[1]) ** 2 + (c[1] - c[2])**2 )
+            if d > diff:
+                diff = d
+                ind = i
 
-        image_np = cv2.inRange(image_np, greenLower, greenUpper)
+        if (diff < 10):
+            print("skipping...")
+            self.publish_img(image_np, self.image_pub)
+            return
+
+        thresh = 5
+        greenLower = (clt.cluster_centers_[ind][0] - thresh, clt.cluster_centers_[ind][1] - thresh, clt.cluster_centers_[ind][2] - thresh)
+        greenUpper = (clt.cluster_centers_[ind][0] + thresh, clt.cluster_centers_[ind][1] + thresh, clt.cluster_centers_[ind][2] + thresh)
+        print("greenupper: ", greenUpper)
+        print("greenlower; ", greenLower)
+        print("\n")
+
+        #cv2.imshow("orig", image_np)
+        #cv2.waitKey()
+
+        greenMask = cv2.inRange(image_np, greenLower, greenUpper)
+        image_np = cv2.bitwise_and(image_np, image_np, mask=greenMask)
+        
+        #cv2.imshow("Segmented", greenMask)
+        #cv2.waitKey()
 
         edges = cv2.Canny(image_np, 100, 150, apertureSize=3)
 
-        #im = Image.fromarray(image_np)
-        # im.save(time.strftime("%Y%m%d-%H%M%S"), "jpeg")
+        #im = Image.fromarray(greenMask)
+        #im.save(time.strftime("%Y%m%d-%H%M%S"), "jpeg")
 
         # TODO: Try different parameters
         #lines = cv2.HoughLines(edges, 1, np.pi / 180, 25, 100, 10)
@@ -89,15 +121,7 @@ class image_feature:
             print("There is no detected line.")
             return
 
-        # Create published image
-        msg = CompressedImage()
-        msg.header.stamp = rospy.Time.now()
-        msg.format = "jpeg"
-        msg.data = np.array(cv2.imencode('.jpg', img)[1]).tostring()
-
-        # Publish new image
-        self.image_pub.publish(msg)
-
+        self.publish_img(img, self.image_pub)
         print(avg)
         #self.subscriber.unregister()
 
@@ -105,6 +129,14 @@ class image_feature:
     def callback(self, ros_data):
         self.curr_cam = ros_data.data
         
+
+    def publish_img(self, img, pub):
+        # Create published image
+        msg = CompressedImage()
+        msg.header.stamp = rospy.Time.now()
+        msg.format = "jpeg"
+        msg.data = np.array(cv2.imencode('.jpg', img)[1]).tostring()
+        pub.publish(msg)
 
     def draw_hough_lines(self, lines, img, orig_img):
         """
@@ -135,7 +167,7 @@ class image_feature:
             y2 = int(y0 - 2000*(a))
 
             cv2.line(orig_img, (x1, y1), (x2, y2), (0, 0, 255), 5)
-            avg_theta += math.atan2(y1-y2, x1-x2)
+            avg_theta += theta
 
         print(len(lines))
 
