@@ -57,26 +57,17 @@ class image_feature:
         np_arr = np.fromstring(self.curr_cam, np.uint8)
         
         image_np = cv2.imdecode(np_arr, cv2.COLOR_BGR2GRAY) 
+
+        h = np.size(image_np, 0)
+        w = np.size(image_np, 1)
+
+        w, h = image_np.shape[:2]
+        image_np = image_np[h/4:3*h/4, 0:w].copy()
+
         image_orig = image_np
-        feat_det = cv2.ORB_create()
-        time1 = time.time()
 
-        # convert np image to grayscale
-        featPoints = feat_det.detect(
-            cv2.cvtColor(image_np, cv2.COLOR_BGR2GRAY))
-        time2 = time.time()
-        #if VERBOSE :
-        #    print ('%s detector found: %s points in: %s sec.'%(method,
-        #        len(featPoints),time2-time1))
-
-        for featpoint in featPoints:
-            x,y = featpoint.pt
-            cv2.circle(image_np,(int(x),int(y)), 3, (0,0,255), -1)
-    
-
-
-        greenLower = (40, 40, 40)
-        greenUpper = (70, 255, 255)
+        greenLower = (25, 52, 72)
+        greenUpper = (102, 255, 255)
 
         image_np = cv2.inRange(image_np, greenLower, greenUpper)
 
