@@ -64,7 +64,7 @@ class image_feature:
         w = np.size(image_np, 1)
 
         w, h = image_np.shape[:2]
-        image_np = image_np[3*h/4:h, 0:w].copy()
+        image_np = image_np[h/2:h, 0:w].copy()
 
         image_orig = image_np
 
@@ -87,7 +87,7 @@ class image_feature:
             self.publish_img(image_np, self.image_pub)
             return
 
-        thresh = 5
+        thresh = 20
         greenLower = (clt.cluster_centers_[ind][0] - thresh, clt.cluster_centers_[ind][1] - thresh, clt.cluster_centers_[ind][2] - thresh)
         greenUpper = (clt.cluster_centers_[ind][0] + thresh, clt.cluster_centers_[ind][1] + thresh, clt.cluster_centers_[ind][2] + thresh)
         print("greenupper: ", greenUpper)
@@ -97,20 +97,28 @@ class image_feature:
         #cv2.imshow("orig", image_np)
         #cv2.waitKey()
 
-        greenMask = cv2.inRange(image_np, greenLower, greenUpper)
-        image_np = cv2.bitwise_and(image_np, image_np, mask=greenMask)
+        image_np = cv2.inRange(image_np, greenLower, greenUpper)
+        #image_np = cv2.bitwise_and(image_np, image_np, mask=greenMask)
         
-        #cv2.imshow("Segmented", greenMask)
-        #cv2.waitKey()
+        edges = cv2.Canny(image_np, 50, 150, apertureSize=3)
 
-        edges = cv2.Canny(image_np, 100, 150, apertureSize=3)
+        #cv2.imshow("Edges", edges)
+        #cv2.waitKey()
 
         #im = Image.fromarray(greenMask)
         #im.save(time.strftime("%Y%m%d-%H%M%S"), "jpeg")
 
         # TODO: Try different parameters
         #lines = cv2.HoughLines(edges, 1, np.pi / 180, 25, 100, 10)
-        lines = cv2.HoughLines(edges, 1, np.pi / 180, 50, None, 50, 100)
+
+
+        minLineLength = 5      # Minimum length of line. Line segments shorter than this are rejected.
+        maxLineGap = 100          # Maximum allowed gap between line segments to treat them as single line.
+        rho_precision = 1
+        theta_precision = np.pi / 180
+        vote_count = 50
+
+        lines = cv2.HoughLines(edges, rho_precision, theta_precision, vote_count) # minLineLength, maxLineGap)
         # If no lines are found punish and continue
         if lines is None:
             print("CameraProcessing.run() - no lines found")
@@ -119,6 +127,7 @@ class image_feature:
             avg, img = self.draw_hough_lines(lines, image_np, image_orig)
         except:
             print("There is no detected line.")
+            self.publish_img(image_np, self.image_pub)
             return
 
         self.publish_img(img, self.image_pub)
