@@ -176,19 +176,24 @@ class image_feature:
             cv2.line(orig_img, (x1, y1), (x2, y2), (0, 0, 255), 5)
 
             if theta > math.pi:
-                tehta = theta - math.pi
+                theta = theta - math.pi
 
-            avg_theta += math.pi/2 - theta
+            theta = math.pi/2-theta
 
-        print(len(lines))
+            if theta < 0:
+                theta = theta + math.pi
+
+            avg_theta += theta
 
         avg_theta /= len(lines)
 
-        return avg_theta * 180/math.pi, orig_img
+        final_angle = avg_theta * 180/math.pi
+
+        return final_angle, orig_img
 
 def main(args):
     '''Initializes and cleanup ros node'''
-    rospy.init_node('image_feature', anonymous=True)
+    rospy.init_node("line_detection_node")
     ic = image_feature()
     
     while not rospy.is_shutdown():
