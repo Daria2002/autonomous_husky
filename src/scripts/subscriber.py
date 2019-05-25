@@ -163,8 +163,6 @@ class image_feature:
 
             rho = line[0][0]
             theta = line[0][1]
-            #theta_temp = abs(theta - math.pi/2)
-            #avg_theta += (theta_temp - math.pi/2)**4
 
             a = np.cos(theta)
             b = np.sin(theta)
@@ -176,7 +174,11 @@ class image_feature:
             y2 = int(y0 - 2000*(a))
 
             cv2.line(orig_img, (x1, y1), (x2, y2), (0, 0, 255), 5)
-            avg_theta += theta
+
+            if theta > math.pi:
+                tehta = theta - math.pi
+
+            avg_theta += math.pi/2 - theta
 
         print(len(lines))
 
