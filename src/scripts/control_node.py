@@ -66,8 +66,8 @@ class control_manager:
 
     def calculate_velocity(self, angle):
         vel = Twist()
-        vel.angular.z = -self.angle_pid.compute(math.pi/2, angle, 0.05)
-        vel.linear.x = 2
+        vel.angular.z = -self.angle_pid.compute(math.pi/2, angle, 0.06)
+        vel.linear.x = 1
 
         return vel
 

@@ -66,8 +66,8 @@ class image_feature:
         h = np.size(image_np, 0)
         w = np.size(image_np, 1)
 
-        w, h = image_np.shape[:2]
-        image_np = image_np[h/2:h, 0:w].copy()
+        #w, h = image_np.shape[:2]
+        #image_np = image_np[h/2:h, 0:w].copy()
 
         image_orig = image_np
 

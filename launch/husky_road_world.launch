@@ -27,7 +27,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 
   <arg name="world_name" default="$(find autonomous_husky)/worlds/road.world"/>
 
-  <arg name="laser_enabled" default="true"/>
+  <arg name="laser_enabled" default="false"/>
   <arg name="kinect_enabled" default="false"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -48,6 +48,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   </include>
    
     <remap from="cmd_vel" to="husky_velocity_controller/cmd_vel" />
-    <!--<node name="publish_node" pkg="autonomous_husky" type="publisher.py" />-->
+    <node name="line_detection_node" pkg="autonomous_husky" type="line_detection_node.py" />
+    <node name="control_node" pkg="autonomous_husky" type="control_node.py" />
 
 </launch>
