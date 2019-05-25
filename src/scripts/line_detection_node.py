@@ -14,6 +14,7 @@ from scipy.ndimage import filters
 from PIL import Image
 
 import matplotlib
+from std_msgs.msg import Float64
 
 # OpenCV
 import cv2
@@ -43,6 +44,8 @@ class image_feature:
             "/output/image_raw/compressed",
             CompressedImage,
             queue_size=1)
+
+        self.angle_pub = rospy.Publisher("/detected_angle", Float64, queue_size=1)
 
         if VERBOSE :
             print ("subscribed to /camera/image/compressed")
@@ -85,6 +88,7 @@ class image_feature:
         if (diff < 10):
             print("skipping...")
             self.publish_img(image_np, self.image_pub)
+            self.publish_angle(-1)
             return
 
         thresh = 20
@@ -94,24 +98,9 @@ class image_feature:
         print("greenlower; ", greenLower)
         print("\n")
 
-        #cv2.imshow("orig", image_np)
-        #cv2.waitKey()
-
         image_np = cv2.inRange(image_np, greenLower, greenUpper)
-        #image_np = cv2.bitwise_and(image_np, image_np, mask=greenMask)
         
         edges = cv2.Canny(image_np, 50, 150, apertureSize=3)
-
-        #cv2.imshow("Edges", edges)
-        #cv2.waitKey()
-
-        #im = Image.fromarray(greenMask)
-        #im.save(time.strftime("%Y%m%d-%H%M%S"), "jpeg")
-
-        # TODO: Try different parameters
-        #lines = cv2.HoughLines(edges, 1, np.pi / 180, 25, 100, 10)
-
-
         minLineLength = 5      # Minimum length of line. Line segments shorter than this are rejected.
         maxLineGap = 100          # Maximum allowed gap between line segments to treat them as single line.
         rho_precision = 1
@@ -125,9 +114,14 @@ class image_feature:
             avg_theta = 500
         try:
             avg, img = self.draw_hough_lines(lines, image_np, image_orig)
+            self.publish_angle(avg)
+
         except:
             print("There is no detected line.")
+
             self.publish_img(image_np, self.image_pub)
+            self.publish_angle(-1)
+
             return
 
         self.publish_img(img, self.image_pub)
@@ -146,6 +140,12 @@ class image_feature:
         msg.format = "jpeg"
         msg.data = np.array(cv2.imencode('.jpg', img)[1]).tostring()
         pub.publish(msg)
+
+    def publish_angle(self, angle):
+        # Create message
+        msg = Float64()
+        msg.data = angle
+        self.angle_pub.publish(msg)
 
     def draw_hough_lines(self, lines, img, orig_img):
         """
@@ -187,7 +187,7 @@ class image_feature:
 
         avg_theta /= len(lines)
 
-        final_angle = avg_theta * 180/math.pi
+        final_angle = avg_theta
 
         return final_angle, orig_img
 
