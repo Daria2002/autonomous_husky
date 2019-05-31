@@ -33,7 +33,14 @@ class control_manager:
 
     def __init__(self):
         self.angle = -1
-        self.angle_pid = PID(1, 0.002, 0.002, 5, -5)
+        self.last_ok_angle = -1
+        self.count = 0
+
+        self.p = 1
+        self.i = 0
+        self.d = 0
+
+        self.angle_pid = PID(self.p, self.i, self.d, 5, -5)
         self.vel = Twist()
 
         # subscribed Topic
@@ -47,12 +54,12 @@ class control_manager:
 
     def process(self):
         if self.angle == -1:
-            print("Initialize self.angle")
             self.vel.angular.z = 0
             self.vel.linear.x = 0
             self.publish_velocity(self.vel)
             return
 
+        self.last_ok_angle = self.angle
         self.vel = self.calculate_velocity(self.angle)
         self.publish_velocity(self.vel)
 
@@ -68,11 +75,12 @@ class control_manager:
         Calculating velocity depending on detected angle
         """
         vel = Twist()
+
         vel.angular.z = -(self.angle_pid.compute(math.pi/2, angle, 0.06))
 
         print("angular velocity:", vel.angular.z)
 
-        vel.linear.x = abs(1.5 * vel.angular.z)
+        vel.linear.x = abs((1.5 + vel.angular.z)*0.9)
 
         return vel
 
