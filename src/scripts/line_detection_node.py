@@ -6,7 +6,7 @@ import sys, time
 import png
 import math
 from sklearn.cluster import KMeans
-
+from cv_bridge import CvBridge
 from LineDetection import LineDetection
 # numpy and scipy
 import numpy as np
@@ -30,7 +30,7 @@ from sensor_msgs.msg import CompressedImage
 # from cv_bridge import CvBridge, CvBridgeError
 
 VERBOSE=False
-ITERATIONS = 2 #5
+ITERATIONS = 1 #5
 DIFF_FACTOR = 10
 
 class image_feature:
@@ -85,7 +85,20 @@ class image_feature:
         #print("\n")
 
         image_np = cv2.inRange(image_np, greenLower, greenUpper)
-        
+    
+        color = (self.color[0], self.color[1], self.color[2])
+
+        print("image_np:", image_np)
+
+        x_size = len(image_np[0])
+        y_size = len(image_np[1])
+
+        print("x_size:", x_size)
+        print("y_size:", y_size)
+
+        # this method checks that line is not on edge
+        print("je li linija po cijeloj slici:", self.checkLine(image_np))
+
         edges = cv2.Canny(image_np, 50, 150, apertureSize=3)
         minLineLength = 5      # Minimum length of line. Line segments shorter than this are rejected.
         maxLineGap = 100          # Maximum allowed gap between line segments to treat them as single line.
@@ -111,8 +124,31 @@ class image_feature:
             return
 
         self.publish_img(img, self.image_pub)
-        print(avg)
+        #print(avg)
         #self.subscriber.unregister()
+
+    def checkLine(self, imageToCheck):
+        # line on right and left half 
+        r = False
+        l = False
+
+        for a in range(0, len(imageToCheck)):
+            for b in range(0, len(imageToCheck[0])):
+                if(imageToCheck[a][b] != 0 & b >= len(imageToCheck[0])/2):
+                    print("set r")
+                    r = True
+                    if(l == True):
+                        return True
+                if(imageToCheck[a][b] != 0 & b < len(imageToCheck[0])/2 & l == False):
+                    print("set l")
+                    l = True
+                    if(r == True):
+                        return True
+        
+        if(l==True & r == True):
+            return True
+
+        return False
 
     def initialize_color(self):
         
@@ -130,7 +166,7 @@ class image_feature:
         image = image_np.reshape((image_np.shape[0] * image_np.shape[1], 3))
         clt = KMeans(n_clusters = 5)
         clt.fit(image)
-        print("Center clusters:", clt.cluster_centers_)
+        #print("Center clusters:", clt.cluster_centers_)
         
         diff = 0
         ind = -1
@@ -148,15 +184,15 @@ class image_feature:
             self.color[0] += clt.cluster_centers_[ind][0]
             self.color[1] += clt.cluster_centers_[ind][1]
             self.color[2] += clt.cluster_centers_[ind][2]
-            print("Found diff color:", clt.cluster_centers_[ind])
-            print("Iteration count {}", self.kmeans_iter)
+            #print("Found diff color:", clt.cluster_centers_[ind])
+            #print("Iteration count {}", self.kmeans_iter)
 
         if self.kmeans_iter == ITERATIONS:
             self.color_initilized = True
             self.color[0] /= ITERATIONS
             self.color[1] /= ITERATIONS
             self.color[2] /= ITERATIONS
-            print("Using color: ", self.color)
+            #print("Using color: ", self.color)
 
     def callback(self, ros_data):
         self.curr_cam = ros_data.data
