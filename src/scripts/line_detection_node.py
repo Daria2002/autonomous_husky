@@ -30,6 +30,8 @@ from sensor_msgs.msg import CompressedImage
 # from cv_bridge import CvBridge, CvBridgeError
 
 VERBOSE=False
+ITERATIONS = 5
+DIFF_FACTOR = 10
 
 class image_feature:
 
@@ -50,53 +52,37 @@ class image_feature:
         if VERBOSE :
             print ("subscribed to /camera/image/compressed")
 
+        self.color = [0, 0, 0]
+        self.color_initilized = False
+        self.kmeans_iter = 0
+            
     def process(self):
         if self.curr_cam is None:
             print("Initialize self.curr_cam")
             return
 
-        if VERBOSE :
-            print ('received image of type: "%s"' % ros_data.format)
+        if not self.color_initilized:
+            print("Color not initialized, exiting detection")
+            self.publish_angle(-1)
+            return
 
         #### direct conversion to CV2 ####
         np_arr = np.fromstring(self.curr_cam, np.uint8)
-        
         image_np = cv2.imdecode(np_arr, cv2.COLOR_BGR2RGB)
 
         h = np.size(image_np, 0)
         w = np.size(image_np, 1)
 
-        #w, h = image_np.shape[:2]
-        #image_np = image_np[h/2:h, 0:w].copy()
-
+        w, h = image_np.shape[:2]
+        image_np = image_np[h/2:h, 0:w].copy()
         image_orig = image_np
 
-        # Do the kmeans
-        image = image_np.reshape((image_np.shape[0] * image_np.shape[1], 3))
-        clt = KMeans(n_clusters = 5)
-        clt.fit(image[0::10])
-        print("Center clusters:", clt.cluster_centers_)
-        
-        diff = 0
-        ind = -1
-        for i, c in enumerate(clt.cluster_centers_):
-            d = sqrt( ( c[0] - c[1]) ** 2 + (c[1] - c[2])**2 )
-            if d > diff:
-                diff = d
-                ind = i
-
-        if (diff < 10):
-            print("skipping...")
-            self.publish_img(image_np, self.image_pub)
-            self.publish_angle(-1)
-            return
-
         thresh = 20
-        greenLower = (clt.cluster_centers_[ind][0] - thresh, clt.cluster_centers_[ind][1] - thresh, clt.cluster_centers_[ind][2] - thresh)
-        greenUpper = (clt.cluster_centers_[ind][0] + thresh, clt.cluster_centers_[ind][1] + thresh, clt.cluster_centers_[ind][2] + thresh)
-        print("greenupper: ", greenUpper)
-        print("greenlower; ", greenLower)
-        print("\n")
+        greenLower = (self.color[0] - thresh, self.color[1] - thresh, self.color[2] - thresh)
+        greenUpper = (self.color[0] + thresh, self.color[1] + thresh, self.color[2] + thresh)
+        #print("greenupper: ", greenUpper)
+        #print("greenlower; ", greenLower)
+        #print("\n")
 
         image_np = cv2.inRange(image_np, greenLower, greenUpper)
         
@@ -128,6 +114,49 @@ class image_feature:
         print(avg)
         #self.subscriber.unregister()
 
+    def initialize_color(self):
+        
+        if self.curr_cam is None:
+            print("Initialize self.curr_cam")
+            return
+
+        if self.color_initilized:
+            return
+
+        np_arr = np.fromstring(self.curr_cam, np.uint8)
+        image_np = cv2.imdecode(np_arr, cv2.COLOR_BGR2RGB)
+
+        # Do the kmeans
+        image = image_np.reshape((image_np.shape[0] * image_np.shape[1], 3))
+        clt = KMeans(n_clusters = 5)
+        clt.fit(image)
+        print("Center clusters:", clt.cluster_centers_)
+        
+        diff = 0
+        ind = -1
+        # find the most different cluster
+        for i, c in enumerate(clt.cluster_centers_):
+            d = sqrt( ( c[0] - c[1]) ** 2 + (c[1] - c[2])**2 )
+            if d > diff:
+                diff = d
+                ind = i
+
+        if diff < DIFF_FACTOR:
+            print("unable to find a different color")
+        else:
+            self.kmeans_iter += 1
+            self.color[0] += clt.cluster_centers_[ind][0]
+            self.color[1] += clt.cluster_centers_[ind][1]
+            self.color[2] += clt.cluster_centers_[ind][2]
+            print("Found diff color:", clt.cluster_centers_[ind])
+            print("Iteration count {}", self.kmeans_iter)
+
+        if self.kmeans_iter == ITERATIONS:
+            self.color_initilized = True
+            self.color[0] /= ITERATIONS
+            self.color[1] /= ITERATIONS
+            self.color[2] /= ITERATIONS
+            print("Using color: ", self.color)
 
     def callback(self, ros_data):
         self.curr_cam = ros_data.data
@@ -197,6 +226,7 @@ def main(args):
     ic = image_feature()
     
     while not rospy.is_shutdown():
+        ic.initialize_color()
         ic.process()
         rospy.sleep(0.05)
 
