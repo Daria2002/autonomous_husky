@@ -29,8 +29,6 @@ from math import sqrt
 from sensor_msgs.msg import CompressedImage
 from geometry_msgs.msg import Twist
 
-VERBOSE=False
-
 class control_manager:
 
     def __init__(self):
@@ -42,6 +40,7 @@ class control_manager:
         self.angle_sub = rospy.Subscriber("/detected_angle",
             Float64, self.callback,  queue_size = 10)
 
+        # velocity publisher
         self.velocity_pub = rospy.Publisher(
             "/husky_velocity_controller/cmd_vel",
             Twist, queue_size=1)
@@ -65,9 +64,18 @@ class control_manager:
         self.velocity_pub.publish(vel)
 
     def calculate_velocity(self, angle):
+        """
+        Calculating velocity depending on detected angle
+        """
         vel = Twist()
-        vel.angular.z = -self.angle_pid.compute(math.pi/2, angle, 0.06)
-        vel.linear.x = 1
+
+
+
+        vel.angular.z = -(self.angle_pid.compute(math.pi/2, angle, 0.06))
+
+        print("angular velocity:", vel.angular.z)
+
+        vel.linear.x = abs(1+  vel.angular.z)
 
         return vel
 

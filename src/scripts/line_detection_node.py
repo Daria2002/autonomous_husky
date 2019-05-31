@@ -30,7 +30,7 @@ from sensor_msgs.msg import CompressedImage
 # from cv_bridge import CvBridge, CvBridgeError
 
 VERBOSE=False
-ITERATIONS = 5
+ITERATIONS = 2 #5
 DIFF_FACTOR = 10
 
 class image_feature:
@@ -171,6 +171,9 @@ class image_feature:
         pub.publish(msg)
 
     def publish_angle(self, angle):
+        """
+        Publishes line angle in radians
+        """
         # Create message
         msg = Float64()
         msg.data = angle
@@ -183,7 +186,7 @@ class image_feature:
        :param lines: Line array.
        :param img: Given image.
  
-       :return: Image with drawn lines
+       :return: Image with drawn lines and line angle in radians
        """
  
         avg_theta = 0
