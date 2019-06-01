@@ -88,13 +88,13 @@ class image_feature:
     
         color = (self.color[0], self.color[1], self.color[2])
 
-        print("image_np:", image_np)
+        #print("image_np:", image_np)
 
         x_size = len(image_np[0])
         y_size = len(image_np[1])
 
-        print("x_size:", x_size)
-        print("y_size:", y_size)
+        #print("x_size:", x_size)
+        #print("y_size:", y_size)
 
         # this method checks that line is not on edge
         print("je li linija po cijeloj slici:", self.checkLine(image_np))
@@ -127,25 +127,81 @@ class image_feature:
         #print(avg)
         #self.subscriber.unregister()
 
+    """
     def checkLine(self, imageToCheck):
         # line on right and left half 
         r = False
         l = False
 
+
         for a in range(0, len(imageToCheck)):
             for b in range(0, len(imageToCheck[0])):
-                if(imageToCheck[a][b] != 0 & b >= len(imageToCheck[0])/2):
-                    print("set r")
+                
+                if(imageToCheck[a][b] != 0):
+                    
+                    print("broj stupaca:", len(imageToCheck))
+                    print("velicina reda:", len(imageToCheck[0])/2)
+                    print("\nEl na a = %s i b = %s je %s" % (a, b, imageToCheck[a][b]))
+                    print("\n")
+                    if(b >= len(imageToCheck[0])/2):
+                        print("b je veci veci od pola")
+                    if(b < len(imageToCheck[0])/2):
+                        print("b je manji od pola")
+                
+                if(imageToCheck[a][b] != 0 and b >= len(imageToCheck[0])/2):
+                    #print("set r???????????????????????????")
                     r = True
                     if(l == True):
                         return True
-                if(imageToCheck[a][b] != 0 & b < len(imageToCheck[0])/2 & l == False):
-                    print("set l")
+                if(imageToCheck[a][b] != 0 and b < len(imageToCheck[0])/2 and l == False):
+                    #print("set l!!!!!!!!!!!!!!!!!!!!!!!!!!")
                     l = True
                     if(r == True):
                         return True
         
         if(l==True & r == True):
+            return True
+
+        return False
+    """
+
+    def checkLine(self, imageToCheck):
+        # line on right and left half 
+        count = 0
+
+        first = False
+        second = False
+        third = False
+        fourth = False
+
+        for a in range(0, len(imageToCheck)):
+            for b in range(0, len(imageToCheck[0])):
+                
+                if(imageToCheck[a][b] != 0 and 0 <= b <= len(imageToCheck[0])/4 and first == False):
+                    count = count + 1 
+                    first = True
+                    if(count > 1):
+                        return True
+                    continue
+                if(imageToCheck[a][b] != 0 and len(imageToCheck[0])/4 < b <= len(imageToCheck[0])/2 and second == False):
+                    count = count + 1
+                    second = True
+                    if(count > 1):
+                        return True
+                    continue
+                if(imageToCheck[a][b] != 0 and len(imageToCheck[0])/2 < b <= 3*len(imageToCheck[0])/4 and third == False):
+                    count = count + 1
+                    third = True
+                    if(count > 1):
+                        return True
+                    continue
+                if(imageToCheck[a][b] != 0 and 3*len(imageToCheck[0])/4 < b <= len(imageToCheck[0]) and fourth == False):
+                    count = count + 1
+                    fourth = True
+                    if(count > 1):
+                        return True
+                    continue
+        if(count > 1 or second == True or third == True):
             return True
 
         return False
