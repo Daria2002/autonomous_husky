@@ -74,7 +74,7 @@ class image_feature:
         w = np.size(image_np, 1)
 
         w, h = image_np.shape[:2]
-        image_np = image_np[h/2:h, 0:w].copy()
+        #image_np = image_np[h/2:h, 0:w].copy()
         image_orig = image_np
 
         thresh = 20
@@ -123,11 +123,11 @@ class image_feature:
             """
 
             if line_status == 1:
-                avg = avg - avg * 0.04
+                avg = avg + abs(avg) * 0.02
                 print("linija je lijevo")
 
             if line_status == 2:
-                avg = avg + avg * 0.04
+                avg = avg - abs(avg) * 0.02
                 print("linija je desno")
 
             #print("popravljeni kut", avg)
@@ -137,12 +137,12 @@ class image_feature:
         except:
             print("There is no detected line.")
 
-            self.publish_img(image_np, self.image_pub)
+            #self.publish_img(image_np, self.image_pub)
             self.publish_angle(-1)
 
             return
 
-        self.publish_img(img, self.image_pub)
+        #self.publish_img(img, self.image_pub)
         #print(avg)
         #self.subscriber.unregister()
 
@@ -158,7 +158,8 @@ class image_feature:
         third = False
         fourth = False
 
-        for a in range(0, len(imageToCheck)):
+        #for a in range(0, len(imageToCheck)):
+        for a in range(len(imageToCheck)/4, 3*len(imageToCheck)/4):
             for b in range(0, len(imageToCheck[0])):
                 
                 if(imageToCheck[a][b] != 0 and 0 <= b <= len(imageToCheck[0])/4 and first == False):
@@ -280,7 +281,7 @@ class image_feature:
 
             cv2.line(orig_img, (x1, y1), (x2, y2), (0, 0, 255), 5)
 
-            if theta > math.pi:
+            if theta >= math.pi:
                 theta = theta - math.pi
 
             theta = math.pi/2-theta
@@ -304,8 +305,7 @@ def main(args):
     while not rospy.is_shutdown():
         ic.initialize_color()
         ic.process()
-        #rospy.sleep(0.05)
-        rospy.sleep(0.01)
+        rospy.sleep(0.05)
 
     cv2.destroyAllWindows()
 

@@ -59,7 +59,6 @@ class control_manager:
             self.publish_velocity(self.vel)
             return
 
-        self.last_ok_angle = self.angle
         self.vel = self.calculate_velocity(self.angle)
         self.publish_velocity(self.vel)
 
@@ -76,11 +75,14 @@ class control_manager:
         """
         vel = Twist()
 
-        vel.angular.z = -(self.angle_pid.compute(math.pi/2, angle, 0.06))
+        vel.angular.z = -(self.angle_pid.compute(math.pi/2, angle, 0.05))
 
         print("angular velocity:", vel.angular.z)
 
-        vel.linear.x = abs((1.5 + vel.angular.z)*0.9)
+        vel.linear.x = abs((1.5 + vel.angular.z)*0.72)
+
+        if vel.linear.x > 1:
+            vel.linear.x = 1
 
         return vel
 
