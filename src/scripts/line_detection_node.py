@@ -123,11 +123,11 @@ class image_feature:
             
             """
             if line_status == 1:
-                avg = avg + abs(avg) * 0.02
+                avg = avg - abs(avg) * 0.02
                 print("linija je lijevo")
 
             elif line_status == 2:
-                avg = avg - abs(avg) * 0.02
+                avg = avg + abs(avg) * 0.02
                 print("linija je desno")
             
             #print("popravljeni kut", avg)

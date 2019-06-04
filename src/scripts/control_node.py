@@ -36,7 +36,7 @@ class control_manager:
         self.last_ok_angle = -1
         self.count = 0
 
-        self.p = 0.9 #1
+        self.p = 1.15 #1
         self.i = 0
         self.d = 0
 
