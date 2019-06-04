@@ -30,7 +30,7 @@ from sensor_msgs.msg import CompressedImage
 # from cv_bridge import CvBridge, CvBridgeError
 
 VERBOSE=False
-ITERATIONS = 1 #5
+ITERATIONS = 5
 DIFF_FACTOR = 10
 
 class image_feature:
@@ -120,16 +120,16 @@ class image_feature:
             else:
                 avg = avg - avg * 0.05
                 print("linija je desno")
+            
             """
-
             if line_status == 1:
                 avg = avg + abs(avg) * 0.02
                 print("linija je lijevo")
 
-            if line_status == 2:
+            elif line_status == 2:
                 avg = avg - abs(avg) * 0.02
                 print("linija je desno")
-
+            
             #print("popravljeni kut", avg)
 
             self.publish_angle(avg)
@@ -137,12 +137,12 @@ class image_feature:
         except:
             print("There is no detected line.")
 
-            #self.publish_img(image_np, self.image_pub)
+            self.publish_img(image_np, self.image_pub)
             self.publish_angle(-1)
 
             return
 
-        #self.publish_img(img, self.image_pub)
+        self.publish_img(img, self.image_pub)
         #print(avg)
         #self.subscriber.unregister()
 
@@ -162,25 +162,26 @@ class image_feature:
         for a in range(len(imageToCheck)/4, 3*len(imageToCheck)/4):
             for b in range(0, len(imageToCheck[0])):
                 
-                if(imageToCheck[a][b] != 0 and 0 <= b <= len(imageToCheck[0])/4 and first == False):
-                    first = True
-                    break
+                if imageToCheck[a][b] != 0:
+                    if(0 <= b <= len(imageToCheck[0])/4 and first == False):
+                        first = True
+                        break
 
-                elif(imageToCheck[a][b] != 0 and len(imageToCheck[0])/4 < b <= len(imageToCheck[0])/2 and second == False):
-                    if(third == True):
-                        return 0
-                    second = True
-                    break
+                    elif(len(imageToCheck[0])/4 < b <= len(imageToCheck[0])/2 and second == False):
+                        if(third == True):
+                            return 0
+                        second = True
+                        break
 
-                elif(imageToCheck[a][b] != 0 and len(imageToCheck[0])/2 < b <= 3*len(imageToCheck[0])/4 and third == False):
-                    if(second == True):
-                        return 0
-                    third = True
-                    break
+                    elif(len(imageToCheck[0])/2 < b <= 3*len(imageToCheck[0])/4 and third == False):
+                        if(second == True):
+                            return 0
+                        third = True
+                        break
 
-                elif(imageToCheck[a][b] != 0 and 3*len(imageToCheck[0])/4 < b <= len(imageToCheck[0]) and fourth == False):
-                    fourth = True
-                    break
+                    elif(3*len(imageToCheck[0])/4 < b <= len(imageToCheck[0]) and fourth == False):
+                        fourth = True
+                        break
 
         if(first):
             return 1
@@ -304,6 +305,7 @@ def main(args):
     
     while not rospy.is_shutdown():
         ic.initialize_color()
+        print("Color is found")
         ic.process()
         rospy.sleep(0.05)
 

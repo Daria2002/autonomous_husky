@@ -36,7 +36,7 @@ class control_manager:
         self.last_ok_angle = -1
         self.count = 0
 
-        self.p = 1
+        self.p = 0.9 #1
         self.i = 0
         self.d = 0
 
@@ -77,12 +77,14 @@ class control_manager:
 
         vel.angular.z = -(self.angle_pid.compute(math.pi/2, angle, 0.05))
 
-        print("angular velocity:", vel.angular.z)
+        #print("angular velocity:", vel.angular.z)
 
-        vel.linear.x = abs((1.5 + vel.angular.z)*0.72)
+        vel.linear.x = 0.5
 
-        if vel.linear.x > 1:
-            vel.linear.x = 1
+        vel.linear.x = abs((1.5 + vel.angular.z)*1.5)
+
+        #if vel.linear.x > 1:
+        #    vel.linear.x = 1
 
         return vel
 

@@ -201,44 +201,10 @@
       <pose frame=''>-5.84026 4.83042 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>3712 105000000</sim_time>
-      <real_time>44 44796965</real_time>
-      <wall_time>1559659220 210707545</wall_time>
-      <iterations>43578</iterations>
-      <model name='/'>
-        <pose frame=''>-1.96919 5.52939 0.283915 6e-06 -0 -6e-06</pose>
-        <scale>1 1 1</scale>
-        <link name='base_link'>
-          <pose frame=''>-1.96919 5.52939 0.283915 6e-06 -0 -6e-06</pose>
-          <velocity>1.6e-05 -2.4e-05 -1.4e-05 0.00023 0.000103 -5e-06</velocity>
-          <acceleration>-1e-06 1e-05 1.8e-05 -5.9e-05 -5e-06 1e-06</acceleration>
-          <wrench>-3.2e-05 0.00044 0.000806 0 -0 0</wrench>
-        </link>
-        <link name='front_left_wheel_link'>
-          <pose frame=''>-1.71319 5.81478 0.316737 -2.6e-05 0.010708 -6e-06</pose>
-          <velocity>2.2e-05 -3.4e-05 2.6e-05 0.00021 0.000128 -4e-06</velocity>
-          <acceleration>-1e-06 8e-06 -3e-06 -5.1e-05 -5e-06 1e-06</acceleration>
-          <wrench>-2e-06 2.2e-05 -9e-06 0 -0 0</wrench>
-        </link>
-        <link name='front_right_wheel_link'>
-          <pose frame=''>-1.7132 5.24399 0.316733 4e-05 0.01065 -5e-06</pose>
-          <velocity>1.9e-05 -3.4e-05 -0.000106 0.000206 0.000123 -4e-06</velocity>
-          <acceleration>-0 8e-06 3.1e-05 -5.1e-05 -5e-06 1e-06</acceleration>
-          <wrench>-1e-06 2.2e-05 8.1e-05 0 -0 0</wrench>
-        </link>
-        <link name='rear_left_wheel_link'>
-          <pose frame=''>-2.22519 5.81479 0.316737 -2e-05 0.010717 -6e-06</pose>
-          <velocity>2.2e-05 -3.2e-05 7.9e-05 0.000197 0.000126 -3e-06</velocity>
-          <acceleration>-1e-06 8e-06 -6e-06 -5e-05 -5e-06 1e-06</acceleration>
-          <wrench>-2e-06 2.2e-05 -1.5e-05 0 -0 0</wrench>
-        </link>
-        <link name='rear_right_wheel_link'>
-          <pose frame=''>-2.22519 5.24399 0.316733 3.4e-05 0.010683 -5e-06</pose>
-          <velocity>1.9e-05 -3.2e-05 -5.3e-05 0.000194 0.00012 -4e-06</velocity>
-          <acceleration>-0 8e-06 2.8e-05 -4.9e-05 -5e-06 1e-06</acceleration>
-          <wrench>-1e-06 2.2e-05 7.5e-05 0 -0 0</wrench>
-        </link>
-      </model>
+      <sim_time>3150 942000000</sim_time>
+      <real_time>972 14852488</real_time>
+      <wall_time>1553098326 551150275</wall_time>
+      <iterations>925797</iterations>
       <model name='ground_plane'>
         <pose frame=''>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -269,6 +235,26 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
+      <model name='walkway_metal_45_1'>
+        <pose frame=''>-1.22572 6.11282 -0.000254 0 -0 2.3562</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>-1.22572 6.11282 -0.000254 0 -0 2.3562</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='walkway_metal_45_10'>
+        <pose frame=''>5.40794 -6.0412 -0.000254 0 0 -1e-06</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>5.40794 -6.0412 -0.000254 0 0 -1e-06</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
       <model name='walkway_metal_45_11'>
         <pose frame=''>-4.49806 -6.80321 -0.000254 0 -0 1.5708</pose>
         <scale>1 1 1</scale>
@@ -289,41 +275,111 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='walkway_metal_45_3'>
-        <pose frame=''>4.45182 5.67103 -0.000254 0 0 -1.5708</pose>
+      <model name='walkway_metal_45_2'>
+        <pose frame=''>-0.68671 7.41356 -0.000254 0 0 -3.14159</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>4.45182 5.67103 -0.000254 0 0 -1.5708</pose>
+          <pose frame=''>-0.68671 7.41356 -0.000254 0 0 -3.14159</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='walkway_metal_45_3'>
+        <pose frame=''>3.12329 8.17555 -0.000254 0 0 -1.5708</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>3.12329 8.17555 -0.000254 0 0 -1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='walkway_metal_45_4'>
-        <pose frame=''>5.75253 5.13216 -0.000254 0 0 -2.35619</pose>
+        <pose frame=''>4.42402 7.63654 -0.000254 0 0 -2.35619</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>5.75253 5.13216 -0.000254 0 0 -2.35619</pose>
+          <pose frame=''>4.42402 7.63654 -0.000254 0 0 -2.35619</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='walkway_metal_45_5'>
-        <pose frame=''>6.4654 -4.85769 -0.000254 0 0 -3.14159</pose>
+        <pose frame=''>4.96264 3.28764 -0.000254 0 0 -3.14159</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>6.4654 -4.85769 -0.000254 0 0 -3.14159</pose>
+          <pose frame=''>4.96264 3.28764 -0.000254 0 0 -3.14159</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='walkway_metal_45_6'>
+        <pose frame=''>3.88462 0.686176 -0.000254 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>3.88462 0.686176 -0.000254 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='walkway_metal_45_7'>
+        <pose frame=''>4.42323 -0.614722 -0.000254 0 -0 0.785398</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>4.42323 -0.614722 -0.000254 0 -0 0.785398</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='walkway_metal_45_8'>
+        <pose frame=''>5.72397 -1.15373 -0.000254 0 -0 1.5708</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>5.72397 -1.15373 -0.000254 0 -0 1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='walkway_metal_45_9'>
-        <pose frame=''>5.94148 -6.20566 -0.000254 0 -0 2.38587</pose>
+        <pose frame=''>6.48597 -3.43974 -0.000254 0 -0 3.14159</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>5.94148 -6.20566 -0.000254 0 -0 2.38587</pose>
+          <pose frame=''>6.48597 -3.43974 -0.000254 0 -0 3.14159</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='walkway_metal_90'>
+        <pose frame=''>-0.68671 7.41356 -0.000508 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>-0.68671 7.41356 -0.000508 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='walkway_metal_90_0'>
+        <pose frame=''>5.72397 -1.15373 -0.000508 0 0 -1.5708</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>5.72397 -1.15373 -0.000508 0 0 -1.5708</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='walkway_metal_90_1'>
+        <pose frame=''>5.40794 -6.0412 -0.000508 0 0 -3.14159</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>5.40794 -6.0412 -0.000508 0 0 -3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -350,10 +406,10 @@
         </link>
       </model>
       <model name='walkway_metal_straight_1'>
-        <pose frame=''>-2.51644 5.58382 -0.000508 0 0 -1.5708</pose>
+        <pose frame=''>0.07529 8.17555 -0.000508 0 0 -1.5708</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-2.51644 5.58382 -0.000508 0 0 -1.5708</pose>
+          <pose frame=''>0.07529 8.17555 -0.000508 0 0 -1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -429,36 +485,6 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='walkway_metal_straight_16_clone'>
-        <pose frame=''>6.34975 -0.510048 -0.000508 0 -0 4e-06</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>6.34975 -0.510048 -0.000508 0 -0 4e-06</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='walkway_metal_straight_16_clone_0'>
-        <pose frame=''>6.34972 0.818326 -0.000508 0 -0 4e-06</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>6.34972 0.818326 -0.000508 0 -0 4e-06</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='walkway_metal_straight_16_clone_1'>
-        <pose frame=''>6.28439 2.27764 -0.000508 0 -0 4e-06</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>6.28439 2.27764 -0.000508 0 -0 4e-06</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
       <model name='walkway_metal_straight_17'>
         <pose frame=''>-7.41508 2.21032 -0.000508 0 -0 4e-06</pose>
         <scale>1 1 1</scale>
@@ -470,70 +496,40 @@
         </link>
       </model>
       <model name='walkway_metal_straight_2'>
-        <pose frame=''>-1.16667 5.58386 -0.000508 0 0 -1.5708</pose>
+        <pose frame=''>1.59929 8.17555 -0.000508 0 0 -1.5708</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-1.16667 5.58386 -0.000508 0 0 -1.5708</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='walkway_metal_straight_2_clone'>
-        <pose frame=''>2.99838 5.68234 -0.000508 0 0 -1.5708</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>2.99838 5.68234 -0.000508 0 0 -1.5708</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='walkway_metal_straight_2_clone_0'>
-        <pose frame=''>1.45402 5.7069 -0.000508 0 0 -1.5708</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>1.45402 5.7069 -0.000508 0 0 -1.5708</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='walkway_metal_straight_2_clone_1'>
-        <pose frame=''>0.234404 5.64154 -0.000508 0 0 -1.5708</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>0.234404 5.64154 -0.000508 0 0 -1.5708</pose>
+          <pose frame=''>1.59929 8.17555 -0.000508 0 0 -1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='walkway_metal_straight_3'>
-        <pose frame=''>6.40008 -0.481222 -0.000508 0 0 -3.14159</pose>
+        <pose frame=''>4.96264 6.33565 -0.000508 0 0 -3.14159</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>6.40008 -0.481222 -0.000508 0 0 -3.14159</pose>
+          <pose frame=''>4.96264 6.33565 -0.000508 0 0 -3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='walkway_metal_straight_4'>
-        <pose frame=''>6.40015 -1.87448 -0.000508 0 0 -3.14159</pose>
+        <pose frame=''>4.96264 4.81165 -0.000508 0 0 -3.14159</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>6.40015 -1.87448 -0.000508 0 0 -3.14159</pose>
+          <pose frame=''>4.96264 4.81165 -0.000508 0 0 -3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='walkway_metal_straight_5'>
-        <pose frame=''>6.42064 -3.37496 -0.000508 0 -0 3.14159</pose>
+        <pose frame=''>6.48597 -1.91573 -0.000508 0 -0 3.14159</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>6.42064 -3.37496 -0.000508 0 -0 3.14159</pose>
+          <pose frame=''>6.48597 -1.91573 -0.000508 0 -0 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -658,6 +654,162 @@
         <kinematic>0</kinematic>
       </link>
       <pose frame=''>-1.74112 6.14708 0 0 -0 0</pose>
+    </model>
+    <model name='walkway_metal_45_1'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <pose frame=''>0 0.538815 0.076075 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.07763 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='collision2'>
+          <pose frame=''>0.15793 0.92 0.076075 0 0 -0.785398</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.07763 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>model://walkway_metal_45/meshes/mesh.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>2.43784 -1.98509 0 0 -0 0</pose>
+    </model>
+    <model name='walkway_metal_45_2'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <pose frame=''>0 0.538815 0.076075 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.07763 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='collision2'>
+          <pose frame=''>0.15793 0.92 0.076075 0 0 -0.785398</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.07763 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>model://walkway_metal_45/meshes/mesh.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>3.00821 7.20674 0 0 -0 0</pose>
+    </model>
+    <model name='walkway_metal_90'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <pose frame=''>0 0.762 0.076075 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.524 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>model://walkway_metal_90/meshes/mesh.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-1.08692 8.51083 0 0 -0 0</pose>
     </model>
     <model name='walkway_metal_straight_1'>
       <static>1</static>
@@ -988,6 +1140,221 @@
       </link>
       <pose frame=''>7.6046 -1.12946 0 0 -0 0</pose>
     </model>
+    <model name='walkway_metal_45_6'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <pose frame=''>0 0.538815 0.076075 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.07763 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='collision2'>
+          <pose frame=''>0.15793 0.92 0.076075 0 0 -0.785398</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.07763 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>model://walkway_metal_45/meshes/mesh.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>2.391 -2.23476 0 0 -0 0</pose>
+    </model>
+    <model name='walkway_metal_45_7'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <pose frame=''>0 0.538815 0.076075 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.07763 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='collision2'>
+          <pose frame=''>0.15793 0.92 0.076075 0 0 -0.785398</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.07763 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>model://walkway_metal_45/meshes/mesh.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-4.29532 -5.35379 0 0 -0 0</pose>
+    </model>
+    <model name='walkway_metal_45_8'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <pose frame=''>0 0.538815 0.076075 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.07763 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='collision2'>
+          <pose frame=''>0.15793 0.92 0.076075 0 0 -0.785398</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.07763 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>model://walkway_metal_45/meshes/mesh.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>6.87114 -1.15989 0 0 -0 0</pose>
+    </model>
+    <model name='walkway_metal_90_0'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <pose frame=''>0 0.762 0.076075 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.524 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>model://walkway_metal_90/meshes/mesh.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>7.9192 -2.44544 0 0 -0 0</pose>
+    </model>
     <model name='walkway_metal_straight_5'>
       <static>1</static>
       <link name='link'>
@@ -1084,6 +1451,103 @@
         <kinematic>0</kinematic>
       </link>
       <pose frame=''>-1.3822 -7.84396 0 0 -0 0</pose>
+    </model>
+    <model name='walkway_metal_45_10'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <pose frame=''>0 0.538815 0.076075 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.07763 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='collision2'>
+          <pose frame=''>0.15793 0.92 0.076075 0 0 -0.785398</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.07763 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>model://walkway_metal_45/meshes/mesh.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-7.90363 0.672669 0 0 -0 0</pose>
+    </model>
+    <model name='walkway_metal_90_1'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <pose frame=''>0 0.762 0.076075 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.524 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>model://walkway_metal_90/meshes/mesh.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>6.55515 -9.20926 0 0 -0 0</pose>
     </model>
     <model name='walkway_metal_straight_6'>
       <static>1</static>
@@ -1433,7 +1897,7 @@
     </model>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>0.049041 5.74204 29.4798 3.14159 1.57079 3.14159</pose>
+        <pose frame=''>-0.819514 -28.8239 6.1295 0 -0 1.5708</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
@@ -1665,799 +2129,6 @@
         <kinematic>0</kinematic>
       </link>
       <pose frame=''>-5.98729 8.54007 0 0 -0 0</pose>
-    </model>
-    <audio>
-      <device>default</device>
-    </audio>
-    <model name='/'>
-      <link name='base_link'>
-        <pose frame=''>0 0 0 0 -0 0</pose>
-        <inertial>
-          <pose frame=''>-0.00065 -0.085 0.062 0 -0 0</pose>
-          <mass>46.034</mass>
-          <inertia>
-            <ixx>0.602204</ixx>
-            <ixy>-0.0236405</ixy>
-            <ixz>-0.119703</ixz>
-            <iyy>1.73861</iyy>
-            <iyz>-0.00154446</iyz>
-            <izz>2.0296</izz>
-          </inertia>
-        </inertial>
-        <collision name='base_link_collision'>
-          <pose frame=''>0 0 0.061875 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.9874 0.5709 0.12375</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <collision name='base_link_collision_1'>
-          <pose frame=''>0 0 0.185625 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.78992 0.5709 0.12375</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <collision name='base_link_fixed_joint_lump__top_plate_link_collision_2'>
-          <pose frame=''>0.0812 0 0.245 0 -0 0</pose>
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>/home/daria/catkin_ws/src/husky/husky_description/meshes/top_plate.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <collision name='base_link_fixed_joint_lump__top_plate_link_collision_3'>
-          <pose frame=''>0.0812 0 0.245 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.32 0.41 0.09</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='base_link_visual'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>/home/daria/catkin_ws/src/husky/husky_description/meshes/base_link.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <visual name='base_link_fixed_joint_lump__camera_box_visual_1'>
-          <pose frame=''>0.6 0 0.6 0 1 0</pose>
-          <geometry>
-            <box>
-              <size>0.05 0.05 0.05</size>
-            </box>
-          </geometry>
-          <material>
-            <script>
-              <uri>__default__</uri>
-              <name>__default__</name>
-            </script>
-          </material>
-        </visual>
-        <visual name='base_link_fixed_joint_lump__front_bumper_link_visual_2'>
-          <pose frame=''>0.48 0 0.091 0 -0 0</pose>
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>/home/daria/catkin_ws/src/husky/husky_description/meshes/bumper.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <visual name='base_link_fixed_joint_lump__rear_bumper_link_visual_3'>
-          <pose frame=''>-0.48 0 0.091 0 -0 3.14159</pose>
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>/home/daria/catkin_ws/src/husky/husky_description/meshes/bumper.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <visual name='base_link_fixed_joint_lump__top_chassis_link_visual_4'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>/home/daria/catkin_ws/src/husky/husky_description/meshes/top_chassis.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <visual name='base_link_fixed_joint_lump__top_plate_link_visual_5'>
-          <pose frame=''>0.0812 0 0.245 0 -0 0</pose>
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>/home/daria/catkin_ws/src/husky/husky_description/meshes/top_plate.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <visual name='base_link_fixed_joint_lump__user_rail_link_visual_6'>
-          <pose frame=''>0.272 0 0.245 0 -0 0</pose>
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>/home/daria/catkin_ws/src/husky/husky_description/meshes/user_rail.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <velocity_decay/>
-        <sensor name='camera1' type='camera'>
-          <update_rate>30</update_rate>
-          <camera name='head'>
-            <horizontal_fov>1.2</horizontal_fov>
-            <image>
-              <width>800</width>
-              <height>800</height>
-              <format>R8G8B8</format>
-            </image>
-            <clip>
-              <near>0.02</near>
-              <far>300</far>
-            </clip>
-            <noise>
-              <type>gaussian</type>
-              <mean>0</mean>
-              <stddev>0.007</stddev>
-            </noise>
-          </camera>
-          <plugin name='camera_controller' filename='libgazebo_ros_camera.so'>
-            <alwaysOn>1</alwaysOn>
-            <updateRate>0.0</updateRate>
-            <cameraName>husky/camera1</cameraName>
-            <imageTopicName>image_raw</imageTopicName>
-            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-            <frameName>camera_box</frameName>
-            <hackBaseline>0.07</hackBaseline>
-            <distortionK1>0.0</distortionK1>
-            <distortionK2>0.0</distortionK2>
-            <distortionK3>0.0</distortionK3>
-            <distortionT1>0.0</distortionT1>
-            <distortionT2>0.0</distortionT2>
-            <robotNamespace>/</robotNamespace>
-          </plugin>
-          <pose frame=''>0.6 0 0.6 0 1 0</pose>
-        </sensor>
-        <gravity>1</gravity>
-        <velocity_decay/>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <link name='front_left_wheel_link'>
-        <pose frame=''>0.256 0.2854 0.03282 0 -0 0</pose>
-        <inertial>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <mass>2.637</mass>
-          <inertia>
-            <ixx>0.02467</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.04411</iyy>
-            <iyz>0</iyz>
-            <izz>0.02467</izz>
-          </inertia>
-        </inertial>
-        <collision name='front_left_wheel_link_collision'>
-          <pose frame=''>0 0 0 1.57079 -0 0</pose>
-          <geometry>
-            <cylinder>
-              <length>0.1143</length>
-              <radius>0.1651</radius>
-            </cylinder>
-          </geometry>
-          <surface>
-            <contact>
-              <ode>
-                <kp>1e+07</kp>
-                <kd>1</kd>
-              </ode>
-            </contact>
-            <friction>
-              <ode>
-                <mu>1</mu>
-                <mu2>1</mu2>
-                <fdir1>1 0 0</fdir1>
-              </ode>
-              <torsional>
-                <ode/>
-              </torsional>
-            </friction>
-            <bounce/>
-          </surface>
-          <max_contacts>10</max_contacts>
-        </collision>
-        <visual name='front_left_wheel_link_visual'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>/home/daria/catkin_ws/src/husky/husky_description/meshes/wheel.dae</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>__default__</uri>
-              <name>__default__</name>
-            </script>
-          </material>
-        </visual>
-        <gravity>1</gravity>
-        <velocity_decay/>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <joint name='front_left_wheel' type='revolute'>
-        <child>front_left_wheel_link</child>
-        <parent>base_link</parent>
-        <axis>
-          <xyz>0 1 0</xyz>
-          <limit>
-            <lower>-1e+16</lower>
-            <upper>1e+16</upper>
-          </limit>
-          <dynamics>
-            <spring_reference>0</spring_reference>
-            <spring_stiffness>0</spring_stiffness>
-          </dynamics>
-          <use_parent_model_frame>1</use_parent_model_frame>
-        </axis>
-      </joint>
-      <link name='front_right_wheel_link'>
-        <pose frame=''>0.256 -0.2854 0.03282 0 -0 0</pose>
-        <inertial>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <mass>2.637</mass>
-          <inertia>
-            <ixx>0.02467</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.04411</iyy>
-            <iyz>0</iyz>
-            <izz>0.02467</izz>
-          </inertia>
-        </inertial>
-        <collision name='front_right_wheel_link_collision'>
-          <pose frame=''>0 0 0 1.57079 -0 0</pose>
-          <geometry>
-            <cylinder>
-              <length>0.1143</length>
-              <radius>0.1651</radius>
-            </cylinder>
-          </geometry>
-          <surface>
-            <contact>
-              <ode>
-                <kp>1e+07</kp>
-                <kd>1</kd>
-              </ode>
-            </contact>
-            <friction>
-              <ode>
-                <mu>1</mu>
-                <mu2>1</mu2>
-                <fdir1>1 0 0</fdir1>
-              </ode>
-              <torsional>
-                <ode/>
-              </torsional>
-            </friction>
-            <bounce/>
-          </surface>
-          <max_contacts>10</max_contacts>
-        </collision>
-        <visual name='front_right_wheel_link_visual'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>/home/daria/catkin_ws/src/husky/husky_description/meshes/wheel.dae</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>__default__</uri>
-              <name>__default__</name>
-            </script>
-          </material>
-        </visual>
-        <gravity>1</gravity>
-        <velocity_decay/>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <joint name='front_right_wheel' type='revolute'>
-        <child>front_right_wheel_link</child>
-        <parent>base_link</parent>
-        <axis>
-          <xyz>0 1 0</xyz>
-          <limit>
-            <lower>-1e+16</lower>
-            <upper>1e+16</upper>
-          </limit>
-          <dynamics>
-            <spring_reference>0</spring_reference>
-            <spring_stiffness>0</spring_stiffness>
-          </dynamics>
-          <use_parent_model_frame>1</use_parent_model_frame>
-        </axis>
-      </joint>
-      <link name='rear_left_wheel_link'>
-        <pose frame=''>-0.256 0.2854 0.03282 0 -0 0</pose>
-        <inertial>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <mass>2.637</mass>
-          <inertia>
-            <ixx>0.02467</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.04411</iyy>
-            <iyz>0</iyz>
-            <izz>0.02467</izz>
-          </inertia>
-        </inertial>
-        <collision name='rear_left_wheel_link_collision'>
-          <pose frame=''>0 0 0 1.57079 -0 0</pose>
-          <geometry>
-            <cylinder>
-              <length>0.1143</length>
-              <radius>0.1651</radius>
-            </cylinder>
-          </geometry>
-          <surface>
-            <contact>
-              <ode>
-                <kp>1e+07</kp>
-                <kd>1</kd>
-              </ode>
-            </contact>
-            <friction>
-              <ode>
-                <mu>1</mu>
-                <mu2>1</mu2>
-                <fdir1>1 0 0</fdir1>
-              </ode>
-              <torsional>
-                <ode/>
-              </torsional>
-            </friction>
-            <bounce/>
-          </surface>
-          <max_contacts>10</max_contacts>
-        </collision>
-        <visual name='rear_left_wheel_link_visual'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>/home/daria/catkin_ws/src/husky/husky_description/meshes/wheel.dae</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>__default__</uri>
-              <name>__default__</name>
-            </script>
-          </material>
-        </visual>
-        <gravity>1</gravity>
-        <velocity_decay/>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <joint name='rear_left_wheel' type='revolute'>
-        <child>rear_left_wheel_link</child>
-        <parent>base_link</parent>
-        <axis>
-          <xyz>0 1 0</xyz>
-          <limit>
-            <lower>-1e+16</lower>
-            <upper>1e+16</upper>
-          </limit>
-          <dynamics>
-            <spring_reference>0</spring_reference>
-            <spring_stiffness>0</spring_stiffness>
-          </dynamics>
-          <use_parent_model_frame>1</use_parent_model_frame>
-        </axis>
-      </joint>
-      <link name='rear_right_wheel_link'>
-        <pose frame=''>-0.256 -0.2854 0.03282 0 -0 0</pose>
-        <inertial>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <mass>2.637</mass>
-          <inertia>
-            <ixx>0.02467</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.04411</iyy>
-            <iyz>0</iyz>
-            <izz>0.02467</izz>
-          </inertia>
-        </inertial>
-        <collision name='rear_right_wheel_link_collision'>
-          <pose frame=''>0 0 0 1.57079 -0 0</pose>
-          <geometry>
-            <cylinder>
-              <length>0.1143</length>
-              <radius>0.1651</radius>
-            </cylinder>
-          </geometry>
-          <surface>
-            <contact>
-              <ode>
-                <kp>1e+07</kp>
-                <kd>1</kd>
-              </ode>
-            </contact>
-            <friction>
-              <ode>
-                <mu>1</mu>
-                <mu2>1</mu2>
-                <fdir1>1 0 0</fdir1>
-              </ode>
-              <torsional>
-                <ode/>
-              </torsional>
-            </friction>
-            <bounce/>
-          </surface>
-          <max_contacts>10</max_contacts>
-        </collision>
-        <visual name='rear_right_wheel_link_visual'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>/home/daria/catkin_ws/src/husky/husky_description/meshes/wheel.dae</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>__default__</uri>
-              <name>__default__</name>
-            </script>
-          </material>
-        </visual>
-        <gravity>1</gravity>
-        <velocity_decay/>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <joint name='rear_right_wheel' type='revolute'>
-        <child>rear_right_wheel_link</child>
-        <parent>base_link</parent>
-        <axis>
-          <xyz>0 1 0</xyz>
-          <limit>
-            <lower>-1e+16</lower>
-            <upper>1e+16</upper>
-          </limit>
-          <dynamics>
-            <spring_reference>0</spring_reference>
-            <spring_stiffness>0</spring_stiffness>
-          </dynamics>
-          <use_parent_model_frame>1</use_parent_model_frame>
-        </axis>
-      </joint>
-      <plugin name='gazebo_ros_control' filename='libgazebo_ros_control.so'>
-        <robotNamespace>/</robotNamespace>
-      </plugin>
-      <plugin name='imu_controller' filename='libhector_gazebo_ros_imu.so'>
-        <robotNamespace>/</robotNamespace>
-        <updateRate>50.0</updateRate>
-        <bodyName>base_link</bodyName>
-        <topicName>imu/data</topicName>
-        <accelDrift>0.005 0.005 0.005</accelDrift>
-        <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
-        <rateDrift>0.005 0.005 0.005</rateDrift>
-        <rateGaussianNoise>0.005 0.005 0.005</rateGaussianNoise>
-        <headingDrift>0.005</headingDrift>
-        <headingGaussianNoise>0.005</headingGaussianNoise>
-      </plugin>
-      <static>0</static>
-      <plugin name='gps_controller' filename='libhector_gazebo_ros_gps.so'>
-        <robotNamespace>/</robotNamespace>
-        <updateRate>40</updateRate>
-        <bodyName>base_link</bodyName>
-        <frameId>base_link</frameId>
-        <topicName>navsat/fix</topicName>
-        <velocityTopicName>navsat/vel</velocityTopicName>
-        <referenceLatitude>49.9</referenceLatitude>
-        <referenceLongitude>8.9</referenceLongitude>
-        <referenceHeading>0</referenceHeading>
-        <referenceAltitude>0</referenceAltitude>
-        <drift>0.0001 0.0001 0.0001</drift>
-      </plugin>
-      <pose frame=''>0 8 0.24 0 -0 0</pose>
-    </model>
-    <model name='walkway_metal_straight_16_clone'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <pose frame=''>0 0.762 0.076075 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>1.524 1.524 0.15215</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <scale>0.001 0.001 0.001</scale>
-              <uri>model://walkway_metal_straight/meshes/mesh.obj</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>4.84699 3.86755 -0.000508 0 -0 4e-06</pose>
-    </model>
-    <model name='walkway_metal_straight_16_clone_0'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <pose frame=''>0 0.762 0.076075 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>1.524 1.524 0.15215</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <scale>0.001 0.001 0.001</scale>
-              <uri>model://walkway_metal_straight/meshes/mesh.obj</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>6.34972 0.818326 -0.000508 0 -0 4e-06</pose>
-    </model>
-    <model name='walkway_metal_straight_16_clone_1'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <pose frame=''>0 0.762 0.076075 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>1.524 1.524 0.15215</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <scale>0.001 0.001 0.001</scale>
-              <uri>model://walkway_metal_straight/meshes/mesh.obj</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>6.28439 2.27764 -0.000508 0 -0 4e-06</pose>
-    </model>
-    <model name='walkway_metal_straight_2_clone'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <pose frame=''>0 0.762 0.076075 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>1.524 1.524 0.15215</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <scale>0.001 0.001 0.001</scale>
-              <uri>model://walkway_metal_straight/meshes/mesh.obj</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>2.9766 5.94382 -0.000508 0 0 -1.5708</pose>
-    </model>
-    <model name='walkway_metal_straight_2_clone_0'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <pose frame=''>0 0.762 0.076075 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>1.524 1.524 0.15215</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <scale>0.001 0.001 0.001</scale>
-              <uri>model://walkway_metal_straight/meshes/mesh.obj</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>1.45402 5.7069 -0.000508 0 0 -1.5708</pose>
-    </model>
-    <model name='walkway_metal_straight_2_clone_1'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <pose frame=''>0 0.762 0.076075 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>1.524 1.524 0.15215</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <scale>0.001 0.001 0.001</scale>
-              <uri>model://walkway_metal_straight/meshes/mesh.obj</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>0.234404 5.64154 -0.000508 0 0 -1.5708</pose>
     </model>
   </world>
 </sdf>
