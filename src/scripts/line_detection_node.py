@@ -78,27 +78,19 @@ class image_feature:
         image_orig = image_np
 
         thresh = 20
-        greenLower = (self.color[0] - thresh, self.color[1] - thresh, self.color[2] - thresh)
-        greenUpper = (self.color[0] + thresh, self.color[1] + thresh, self.color[2] + thresh)
-        #print("greenupper: ", greenUpper)
-        #print("greenlower; ", greenLower)
-        #print("\n")
+        colorLower = (self.color[0] - thresh, self.color[1] - thresh, self.color[2] - thresh)
+        colorUpper = (self.color[0] + thresh, self.color[1] + thresh, self.color[2] + thresh)
 
-        image_np = cv2.inRange(image_np, greenLower, greenUpper)
+        image_np = cv2.inRange(image_np, colorLower, colorUpper)
     
         color = (self.color[0], self.color[1], self.color[2])
 
         x_size = len(image_np[0])
         y_size = len(image_np[1])
 
-        # this method checks that line is not on edge
-        if self.checkLine(image_np) == 0:
-            print("Linija je ok",)
-        elif self.checkLine(image_np) == 1:
-            print("linija je lijevo")
-        else:
-            print("linija je desno")
 
+        line_status = self.checkLine(image_np)
+        
         edges = cv2.Canny(image_np, 50, 150, apertureSize=3)
         minLineLength = 5      # Minimum length of line. Line segments shorter than this are rejected.
         maxLineGap = 100          # Maximum allowed gap between line segments to treat them as single line.
@@ -113,6 +105,33 @@ class image_feature:
             avg_theta = 500
         try:
             avg, img = self.draw_hough_lines(lines, image_np, image_orig)
+            #print("kut koji se pub ako se linije ne popravljaju:", avg)
+
+
+            """
+            if line_status == 0:
+                #print("Linija je ok")
+
+
+            elif line_status == 1:
+                avg = avg + avg * 0.05
+                print("linija je lijevo")
+
+            else:
+                avg = avg - avg * 0.05
+                print("linija je desno")
+            """
+
+            if line_status == 1:
+                avg = avg - avg * 0.04
+                print("linija je lijevo")
+
+            if line_status == 2:
+                avg = avg + avg * 0.04
+                print("linija je desno")
+
+            #print("popravljeni kut", avg)
+
             self.publish_angle(avg)
 
         except:
@@ -143,28 +162,30 @@ class image_feature:
             for b in range(0, len(imageToCheck[0])):
                 
                 if(imageToCheck[a][b] != 0 and 0 <= b <= len(imageToCheck[0])/4 and first == False):
-                    count = count + 1 
                     first = True
-                    if(count > 1):
+                    break
+
+                elif(imageToCheck[a][b] != 0 and len(imageToCheck[0])/4 < b <= len(imageToCheck[0])/2 and second == False):
+                    if(third == True):
                         return 0
-                    continue
-                if(imageToCheck[a][b] != 0 and len(imageToCheck[0])/4 < b <= len(imageToCheck[0])/2 and second == False):
-                    return 0
-                if(imageToCheck[a][b] != 0 and len(imageToCheck[0])/2 < b <= 3*len(imageToCheck[0])/4 and third == False):
-                    return 0
-                if(imageToCheck[a][b] != 0 and 3*len(imageToCheck[0])/4 < b <= len(imageToCheck[0]) and fourth == False):
-                    count = count + 1
+                    second = True
+                    break
+
+                elif(imageToCheck[a][b] != 0 and len(imageToCheck[0])/2 < b <= 3*len(imageToCheck[0])/4 and third == False):
+                    if(second == True):
+                        return 0
+                    third = True
+                    break
+
+                elif(imageToCheck[a][b] != 0 and 3*len(imageToCheck[0])/4 < b <= len(imageToCheck[0]) and fourth == False):
                     fourth = True
-                    if(count > 1):
-                        return 0
-                    continue
-        if(count > 1):
-            return 0
+                    break
 
         if(first):
             return 1
-        
-        return 2
+        if(fourth):
+            return 2
+        return 0
 
     def initialize_color(self):
         
@@ -283,7 +304,8 @@ def main(args):
     while not rospy.is_shutdown():
         ic.initialize_color()
         ic.process()
-        rospy.sleep(0.05)
+        #rospy.sleep(0.05)
+        rospy.sleep(0.01)
 
     cv2.destroyAllWindows()
 
