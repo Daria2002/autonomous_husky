@@ -39,14 +39,14 @@ class image_feature:
         self.curr_cam = None
 
         # subscribed Topic
-        """
+        
         self.subscriber = rospy.Subscriber("image_raw",
             CompressedImage, self.callback,  queue_size = 10)
     
         """
         self.subscriber = rospy.Subscriber("husky/camera1/image_raw/compressed",
             CompressedImage, self.callback,  queue_size = 10)
-
+        """
         self.image_pub = rospy.Publisher(
             "/output/image_raw/compressed",
             CompressedImage,

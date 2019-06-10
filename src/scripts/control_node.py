@@ -46,7 +46,7 @@ class control_manager:
         # subscribed Topic
         self.angle_sub = rospy.Subscriber("/detected_angle",
             Float64, self.callback,  queue_size = 10)
-
+        """
         # velocity publisher
         self.velocity_pub = rospy.Publisher(
             "/husky_velocity_controller/cmd_vel",
@@ -55,7 +55,7 @@ class control_manager:
         """
         self.velocity_pub = rospy.Publisher(
             "ecu_pwm", Twist, queue_size=1)
-        """
+        
 
     def process(self):
         if self.angle == -1:
@@ -78,7 +78,7 @@ class control_manager:
         """
         Calculating velocity depending on detected angle
         """
-        """
+        
         steering = angle * 180/(math.pi/2)
         throttle = 100-abs(angle - 90) 
         ecu_cmd = ECU(throttle, steering)
@@ -93,7 +93,7 @@ class control_manager:
         #print("vel.linear.x= ", vel.linear.x)
 
         return vel
-
+        """
 def main(args):
     '''Initializes and cleanup ros node'''
     rospy.init_node("control_node")
