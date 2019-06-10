@@ -52,6 +52,11 @@ class control_manager:
             "/husky_velocity_controller/cmd_vel",
             Twist, queue_size=1)
 
+        """
+        self.velocity_pub = rospy.Publisher(
+            "ecu_pwm", Twist, queue_size=1)
+        """
+
     def process(self):
         if self.angle == -1:
             self.vel.angular.z = 0
@@ -72,6 +77,12 @@ class control_manager:
     def calculate_velocity(self, angle):
         """
         Calculating velocity depending on detected angle
+        """
+        """
+        steering = angle * 180/(math.pi/2)
+        throttle = 100-abs(angle - 90) 
+        ecu_cmd = ECU(throttle, steering)
+        self.velocity_pub.publish(ecu_cmd)
         """
         vel = Twist()
 

@@ -15,7 +15,7 @@ from PIL import Image
 
 import matplotlib
 from std_msgs.msg import Float64
-
+from barc.msg import ECU
 # OpenCV
 import cv2
 
@@ -39,6 +39,11 @@ class image_feature:
         self.curr_cam = None
 
         # subscribed Topic
+        """
+        self.subscriber = rospy.Subscriber("image_raw",
+            CompressedImage, self.callback,  queue_size = 10)
+    
+        """
         self.subscriber = rospy.Subscriber("husky/camera1/image_raw/compressed",
             CompressedImage, self.callback,  queue_size = 10)
 
