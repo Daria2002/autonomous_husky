@@ -76,15 +76,10 @@ class control_manager:
         vel = Twist()
 
         vel.angular.z = -(self.angle_pid.compute(math.pi/2, angle, 0.05))
-
-        #print("angular velocity:", vel.angular.z)
-
-        vel.linear.x = 0.5
+        #print("vel.angular.z= ", vel.angular.z);
 
         vel.linear.x = abs((1.5 + vel.angular.z)*1.5)
-
-        #if vel.linear.x > 1:
-        #    vel.linear.x = 1
+        #print("vel.linear.x= ", vel.linear.x)
 
         return vel
 
