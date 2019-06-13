@@ -47,15 +47,10 @@ class image_feature:
         self.subscriber = rospy.Subscriber("husky/camera1/image_raw/compressed",
             CompressedImage, self.callback,  queue_size = 10)
         """
-        self.image_pub = rospy.Publisher(
-            "/output/image_raw/compressed",
-            CompressedImage,
+        self.image_pub = rospy.Publisher("/output/image_raw/compressed", CompressedImage,
             queue_size=1)
 
         self.angle_pub = rospy.Publisher("/detected_angle", Float64, queue_size=1)
-
-        if VERBOSE :
-            print ("subscribed to /camera/image/compressed")
 
         self.color = [0, 0, 0]
         self.color_initilized = False

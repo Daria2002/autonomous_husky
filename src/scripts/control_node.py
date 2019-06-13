@@ -41,6 +41,7 @@ class control_manager:
         self.d = 0
 
         self.angle_pid = PID(self.p, self.i, self.d, 5, -5)
+        # self.angle_pid = PID(self.p, self.i, self.d, math.pi, 0)
         self.vel = Twist()
 
         # subscribed Topic
@@ -55,34 +56,36 @@ class control_manager:
         """
         self.velocity_pub = rospy.Publisher(
             "ecu_pwm", Twist, queue_size=1)
-        
 
     def process(self):
         if self.angle == -1:
-            self.vel.angular.z = 0
-            self.vel.linear.x = 0
-            self.publish_velocity(self.vel)
+            self.vel = ECU(0, 0)
+            self.velocity_pub.publish(self.vel)
             return
 
         self.vel = self.calculate_velocity(self.angle)
-        self.publish_velocity(self.vel)
+        self.velocity_pub.publish(self.vel)
 
     def callback(self, ros_data):
         self.angle = ros_data.data
-
-    def publish_velocity(self, vel):
-        # Create published image
-        self.velocity_pub.publish(vel)
 
     def calculate_velocity(self, angle):
         """
         Calculating velocity depending on detected angle
         """
-        
-        steering = angle * 180/(math.pi/2)
-        throttle = 100-abs(angle - 90) 
+        # steering = angle * 180/(math.pi/2)
+        # throttle = 100-abs(angle - 90) 
+
+        help_steering = -(self.angle_pid.compute(math.pi/2, angle, 0.05))
+        steering = help_steering * 180/(math.pi)
+
+        help_throttle = abs((1.5 + vel.angular.z)*1.5)
+        throttle = help_throttle * 180/(math.pi)
+
         ecu_cmd = ECU(throttle, steering)
-        self.velocity_pub.publish(ecu_cmd)
+
+        return ecu_cmd
+
         """
         vel = Twist()
 
