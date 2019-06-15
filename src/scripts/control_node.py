@@ -6,7 +6,7 @@ import sys, time
 import png
 import math
 from sklearn.cluster import KMeans
-
+from barc.msg import ECU
 from LineDetection import LineDetection
 from PID import PID
 # numpy and scipy
@@ -32,6 +32,7 @@ from geometry_msgs.msg import Twist
 class control_manager:
 
     def __init__(self):
+	print("konstruktor control_manager")
         self.angle = -1
         self.last_ok_angle = -1
         self.count = 0
@@ -55,14 +56,16 @@ class control_manager:
 
         """
         self.velocity_pub = rospy.Publisher(
-            "ecu_pwm", Twist, queue_size=1)
+            "ecu_pwm", ECU, queue_size=1)
 
     def process(self):
         if self.angle == -1:
-            self.vel = ECU(0, 0)
+            self.vel = ECU(90, 90)
+	    print("ne vidi se linija")
             self.velocity_pub.publish(self.vel)
             return
 
+	print("vidi se linija")
         self.vel = self.calculate_velocity(self.angle)
         self.velocity_pub.publish(self.vel)
 
@@ -76,14 +79,18 @@ class control_manager:
         # steering = angle * 180/(math.pi/2)
         # throttle = 100-abs(angle - 90) 
 
-        help_steering = -(self.angle_pid.compute(math.pi/2, angle, 0.05))
-        steering = help_steering * 180/(math.pi)
+        #help_steering = -(self.angle_pid.compute(math.pi/2, angle, 0.05))
+        #steering = help_steering * 180/(math.pi)	
+	
+	steering = angle * 180/math.pi
+	print("steering", steering)
+        throttle = 105
+	print("throttle", throttle)
 
-        help_throttle = abs((1.5 + vel.angular.z)*1.5)
-        throttle = help_throttle * 180/(math.pi)
-
-        ecu_cmd = ECU(throttle, steering)
-
+        # ecu_cmd = ECU(throttle, steering)
+		
+	ecu_cmd = ECU(throttle, steering)	
+	print("brzina je postavljena")
         return ecu_cmd
 
         """

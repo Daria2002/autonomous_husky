@@ -1,36 +1,26 @@
 #!/usr/bin/env python
 
-# Python libs
 import os
 import sys, time
 import png
 import math
+import rospy
+from sensor_msgs.msg import CompressedImage
+from std_msgs.msg import Float64
+import cv2
+from PIL import Image
+from math import sqrt
 from sklearn.cluster import KMeans
 from cv_bridge import CvBridge
 from LineDetection import LineDetection
-# numpy and scipy
 import numpy as np
 from scipy.ndimage import filters
-from PIL import Image
-
 import matplotlib
-from std_msgs.msg import Float64
-from barc.msg import ECU
-# OpenCV
-import cv2
-
-# Ros libraries
 import roslib
-import rospy
-from math import sqrt
-
-# Ros Messages
-from sensor_msgs.msg import CompressedImage
-# We do not use cv_bridge it does not support CompressedImage in python
-# from cv_bridge import CvBridge, CvBridgeError
+from barc.msg import ECU
 
 VERBOSE=False
-ITERATIONS = 5
+ITERATIONS = 2
 DIFF_FACTOR = 10
 
 class image_feature:
@@ -39,8 +29,7 @@ class image_feature:
         self.curr_cam = None
 
         # subscribed Topic
-        
-        self.subscriber = rospy.Subscriber("image_raw",
+        self.subscriber = rospy.Subscriber("/image_raw/compressed",
             CompressedImage, self.callback,  queue_size = 10)
     
         """
@@ -55,17 +44,17 @@ class image_feature:
         self.color = [0, 0, 0]
         self.color_initilized = False
         self.kmeans_iter = 0
-            
+	
     def process(self):
         if self.curr_cam is None:
-            print("Initialize self.curr_cam")
+            #print("Initialize self.curr_cam")
             return
 
         if not self.color_initilized:
             print("Color not initialized, exiting detection")
             self.publish_angle(-1)
             return
-
+	
         #### direct conversion to CV2 ####
         np_arr = np.fromstring(self.curr_cam, np.uint8)
         image_np = cv2.imdecode(np_arr, cv2.COLOR_BGR2RGB)
@@ -122,15 +111,14 @@ class image_feature:
                 print("linija je desno")
             
             """
-            if line_status == 1:
+            #if line_status == 1:
                 #avg = avg - abs(avg) * 0.5
-                print("linija je lijevo")
+                #print("linija je lijevo")
 
-            elif line_status == 2:
+            #elif line_status == 2:
                 #avg = avg + abs(avg) * 0.5
-                print("linija je desno")
+                #print("linija je desno")
             
-            print("popravljeni kut", avg)
 
             self.publish_angle(avg)
 
@@ -143,7 +131,7 @@ class image_feature:
             return
 
         self.publish_img(img, self.image_pub)
-        #print(avg)
+        print("kut je publishan")
         #self.subscriber.unregister()
 
     def checkLine(self, imageToCheck):
@@ -196,6 +184,7 @@ class image_feature:
             return
 
         if self.color_initilized:
+	    print("self.curr_cam initialized")
             return
 
         np_arr = np.fromstring(self.curr_cam, np.uint8)
@@ -205,7 +194,6 @@ class image_feature:
         image = image_np.reshape((image_np.shape[0] * image_np.shape[1], 3))
         clt = KMeans(n_clusters = 5)
         clt.fit(image)
-        #print("Center clusters:", clt.cluster_centers_)
         
         diff = 0
         ind = -1
@@ -218,24 +206,22 @@ class image_feature:
 
         if diff < DIFF_FACTOR:
             print("unable to find a different color")
+	    
         else:
             self.kmeans_iter += 1
             self.color[0] += clt.cluster_centers_[ind][0]
             self.color[1] += clt.cluster_centers_[ind][1]
             self.color[2] += clt.cluster_centers_[ind][2]
-            #print("Found diff color:", clt.cluster_centers_[ind])
-            #print("Iteration count {}", self.kmeans_iter)
 
         if self.kmeans_iter == ITERATIONS:
             self.color_initilized = True
             self.color[0] /= ITERATIONS
             self.color[1] /= ITERATIONS
             self.color[2] /= ITERATIONS
-            #print("Using color: ", self.color)
+	    print("Color is found")
 
     def callback(self, ros_data):
         self.curr_cam = ros_data.data
-        
 
     def publish_img(self, img, pub):
         # Create published image
@@ -255,14 +241,14 @@ class image_feature:
         self.angle_pub.publish(msg)
 
     def draw_hough_lines(self, lines, img, orig_img):
+	"""
+        Draw Hough lines on the given image
+ 
+        :param lines: Line array.
+        :param img: Given image.
+ 
+        :return: Image with drawn lines and line angle in radians
         """
-       Draw Hough lines on the given image
- 
-       :param lines: Line array.
-       :param img: Given image.
- 
-       :return: Image with drawn lines and line angle in radians
-       """
  
         avg_theta = 0
         for line in lines:
@@ -303,9 +289,10 @@ def main(args):
     rospy.init_node("line_detection_node")
     ic = image_feature()
     
+    print("start")
+    
     while not rospy.is_shutdown():
         ic.initialize_color()
-        print("Color is found")
         ic.process()
         rospy.sleep(0.05)
 
