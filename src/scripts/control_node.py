@@ -72,6 +72,10 @@ class control_manager:
     def callback(self, ros_data):
         self.angle = ros_data.data
 
+    def gaussian(self, x, mu, sig):
+        return np.exp(-np.power(x - mu, 2.) / (2 * np.power(sig, 2.)))
+
+
     def calculate_velocity(self, angle):
         """
         Calculating velocity depending on detected angle
@@ -84,8 +88,9 @@ class control_manager:
 	
 	steering = angle * 180/math.pi
 	print("steering", steering)
-        throttle = 105
-	print("throttle", throttle)
+    #throttle = 105
+	throttle = self.gaussian(angle * 180/math.pi, 90, 30) * 7 + 98
+    print("throttle", throttle)
 
         # ecu_cmd = ECU(throttle, steering)
 		
