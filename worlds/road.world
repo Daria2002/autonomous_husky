@@ -201,42 +201,42 @@
       <pose frame=''>-5.84026 4.83042 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>3951 353000000</sim_time>
-      <real_time>253 921831281</real_time>
-      <wall_time>1559662482 739889531</wall_time>
-      <iterations>239248</iterations>
+      <sim_time>4196 542000000</sim_time>
+      <real_time>47 951498156</real_time>
+      <wall_time>1560899338 782026801</wall_time>
+      <iterations>47072</iterations>
       <model name='/'>
-        <pose frame=''>-2.27689 5.63527 0.283915 4e-06 -0 -0.022919</pose>
+        <pose frame=''>-1.51251 5.5493 0.283915 7e-06 -0 0.003547</pose>
         <scale>1 1 1</scale>
         <link name='base_link'>
-          <pose frame=''>-2.27689 5.63527 0.283915 4e-06 -0 -0.022919</pose>
-          <velocity>-0 2e-06 4e-05 -2e-05 0 0</velocity>
-          <acceleration>0 -0 -0 0 -0 0</acceleration>
-          <wrench>3e-06 -0 -0 0 -0 0</wrench>
+          <pose frame=''>-1.51251 5.5493 0.283915 7e-06 -0 0.003547</pose>
+          <velocity>6e-06 -3.9e-05 -1.9e-05 0.000214 0.000234 0.000135</velocity>
+          <acceleration>-5e-06 2e-06 3e-06 -8e-06 -1.1e-05 -7e-06</acceleration>
+          <wrench>-0.000234 0.000103 0.00012 0 -0 0</wrench>
         </link>
         <link name='front_left_wheel_link'>
-          <pose frame=''>-2.01442 5.91473 0.316736 -5.2e-05 1.32549 -0.02297</pose>
-          <velocity>-0 3e-06 3.4e-05 -1.6e-05 -2e-06 -0</velocity>
-          <acceleration>0 -0 -0 0 -0 0</acceleration>
-          <wrench>0 -0 -0 0 -0 0</wrench>
+          <pose frame=''>-1.25752 5.8356 0.316737 -3.14157 -0.058466 -3.13805</pose>
+          <velocity>-2.3e-05 -1.7e-05 -1.7e-05 0.000105 -0.000128 4.5e-05</velocity>
+          <acceleration>-2e-06 1e-06 2e-06 -4e-06 -1.5e-05 -2e-06</acceleration>
+          <wrench>-6e-06 2e-06 6e-06 0 -0 0</wrench>
         </link>
         <link name='front_right_wheel_link'>
-          <pose frame=''>-2.0275 5.34408 0.316734 3.14157 0.348189 3.11867</pose>
-          <velocity>-0 3e-06 4.6e-05 -1.7e-05 -3e-06 0</velocity>
-          <acceleration>0 -0 0 0 -0 0</acceleration>
-          <wrench>0 -0 0 0 -0 0</wrench>
+          <pose frame=''>-1.2555 5.26481 0.316733 7.2e-05 -0.89494 0.003487</pose>
+          <velocity>8.2e-05 -1.7e-05 -0.000117 0.000105 -0.000386 0.000127</velocity>
+          <acceleration>-7e-06 1e-06 6e-06 -4e-06 -0 -5e-06</acceleration>
+          <wrench>-2e-05 2e-06 1.6e-05 0 -0 0</wrench>
         </link>
         <link name='rear_left_wheel_link'>
-          <pose frame=''>-2.52628 5.92646 0.316736 -2e-05 0.664761 -0.022932</pose>
-          <velocity>-0 3e-06 3.4e-05 -1.6e-05 -3e-06 0</velocity>
-          <acceleration>0 -0 -0 0 -0 0</acceleration>
-          <wrench>0 -0 -0 0 -0 0</wrench>
+          <pose frame=''>-1.76952 5.83379 0.316736 3.14158 0.568829 -3.13805</pose>
+          <velocity>-4.6e-05 -6.8e-05 9.8e-05 0.000407 0.000101 0.000209</velocity>
+          <acceleration>-2e-06 3e-06 -3e-06 -1.8e-05 -2.2e-05 -9e-06</acceleration>
+          <wrench>-4e-06 8e-06 -9e-06 0 -0 0</wrench>
         </link>
         <link name='rear_right_wheel_link'>
-          <pose frame=''>-2.53936 5.35581 0.316734 3.14156 0.870348 3.11865</pose>
-          <velocity>-0 3e-06 4.6e-05 -1.8e-05 -3e-06 0</velocity>
-          <acceleration>0 -0 -0 0 -0 0</acceleration>
-          <wrench>0 -0 -0 0 -0 0</wrench>
+          <pose frame=''>-1.76749 5.26299 0.316733 3.8e-05 -1.42962 0.003509</pose>
+          <velocity>5.4e-05 -4.9e-05 -9e-06 0.000251 -9.7e-05 0.000206</velocity>
+          <acceleration>-6e-06 2e-06 1e-06 -1.1e-05 -1.3e-05 -1e-05</acceleration>
+          <wrench>-1.6e-05 6e-06 1e-06 0 -0 0</wrench>
         </link>
       </model>
       <model name='ground_plane'>
@@ -300,30 +300,30 @@
         </link>
       </model>
       <model name='walkway_metal_45_4'>
-        <pose frame=''>5.75253 5.13216 -0.000254 0 0 -2.35619</pose>
+        <pose frame=''>6.66734 4.1085 -0.000254 0 0 -2.35619</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>5.75253 5.13216 -0.000254 0 0 -2.35619</pose>
+          <pose frame=''>6.66734 4.1085 -0.000254 0 0 -2.35619</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='walkway_metal_45_5'>
-        <pose frame=''>6.40006 -4.9232 -0.000254 0 0 -3.14159</pose>
+        <pose frame=''>7.11883 -4.18264 -0.000254 0 0 -3.14159</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>6.40006 -4.9232 -0.000254 0 0 -3.14159</pose>
+          <pose frame=''>7.11883 -4.18264 -0.000254 0 0 -3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='walkway_metal_45_9'>
-        <pose frame=''>5.83258 -6.27089 -0.000254 0 -0 2.38587</pose>
+        <pose frame=''>5.74542 -6.27089 -0.000254 0 -0 2.38587</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>5.83258 -6.27089 -0.000254 0 -0 2.38587</pose>
+          <pose frame=''>5.74542 -6.27089 -0.000254 0 -0 2.38587</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -430,30 +430,30 @@
         </link>
       </model>
       <model name='walkway_metal_straight_16_clone'>
-        <pose frame=''>6.34975 -0.510048 -0.000508 0 -0 4e-06</pose>
+        <pose frame=''>6.71996 4.06355 -0.000508 0 -0 0.716604</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>6.34975 -0.510048 -0.000508 0 -0 4e-06</pose>
+          <pose frame=''>6.71996 4.06355 -0.000508 0 -0 0.716604</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='walkway_metal_straight_16_clone_0'>
-        <pose frame=''>6.34972 0.818326 -0.000508 0 -0 4e-06</pose>
+        <pose frame=''>7.15558 0.077829 -0.000508 0 -0 4e-06</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>6.34972 0.818326 -0.000508 0 -0 4e-06</pose>
+          <pose frame=''>7.15558 0.077829 -0.000508 0 -0 4e-06</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='walkway_metal_straight_16_clone_1'>
-        <pose frame=''>6.28439 2.27764 -0.000508 0 -0 4e-06</pose>
+        <pose frame=''>7.17748 1.38469 -0.000508 0 -0 4e-06</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>6.28439 2.27764 -0.000508 0 -0 4e-06</pose>
+          <pose frame=''>7.17748 1.38469 -0.000508 0 -0 4e-06</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -510,30 +510,40 @@
         </link>
       </model>
       <model name='walkway_metal_straight_3'>
-        <pose frame=''>6.40008 -0.481222 -0.000508 0 0 -3.14159</pose>
+        <pose frame=''>7.16236 0.128675 -0.000508 0 0 -3.14159</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>6.40008 -0.481222 -0.000508 0 0 -3.14159</pose>
+          <pose frame=''>7.16236 0.128675 -0.000508 0 0 -3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='walkway_metal_straight_4'>
-        <pose frame=''>6.40015 -1.87448 -0.000508 0 0 -3.14159</pose>
+        <pose frame=''>7.14064 -1.35181 -0.000508 0 0 -3.14159</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>6.40015 -1.87448 -0.000508 0 0 -3.14159</pose>
+          <pose frame=''>7.14064 -1.35181 -0.000508 0 0 -3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='walkway_metal_straight_5'>
-        <pose frame=''>6.42064 -3.37496 -0.000508 0 -0 3.14159</pose>
+        <pose frame=''>7.13941 -2.74334 -0.000508 0 -0 3.14159</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>6.42064 -3.37496 -0.000508 0 -0 3.14159</pose>
+          <pose frame=''>7.13941 -2.74334 -0.000508 0 -0 3.14159</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='walkway_metal_straight_5_clone'>
+        <pose frame=''>6.65685 -5.4257 -0.000508 0 -0 2.34304</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>6.65685 -5.4257 -0.000508 0 -0 2.34304</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -1433,7 +1443,7 @@
     </model>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>-0.422433 4.75308 29.4798 3.14159 1.57079 3.14159</pose>
+        <pose frame=''>1.77177 -0.089658 29.4798 3.14159 1.57079 3.14159</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
@@ -2458,6 +2468,44 @@
         <kinematic>0</kinematic>
       </link>
       <pose frame=''>0.234404 5.64154 -0.000508 0 0 -1.5708</pose>
+    </model>
+    <model name='walkway_metal_straight_5_clone'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <pose frame=''>0 0.762 0.076075 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.524 1.524 0.15215</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>model://walkway_metal_straight/meshes/mesh.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>4.2394 -3.00811 -0.000508 0 -0 3.14159</pose>
     </model>
   </world>
 </sdf>

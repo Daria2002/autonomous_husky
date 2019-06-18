@@ -12,6 +12,7 @@ from LineDetection import LineDetection
 import numpy as np
 from scipy.ndimage import filters
 from PIL import Image
+import time
 
 import matplotlib
 from std_msgs.msg import Float64
@@ -120,14 +121,14 @@ class image_feature:
             else:
                 avg = avg - avg * 0.05
                 print("linija je desno")
-            
             """
+            
             if line_status == 1:
-                avg = avg - abs(avg) * 0.02
+                avg = avg - abs(avg) * 0.05
                 print("linija je lijevo")
 
             elif line_status == 2:
-                avg = avg + abs(avg) * 0.02
+                avg = avg - abs(avg) * 0.5
                 print("linija je desno")
             
             #print("popravljeni kut", avg)
@@ -190,7 +191,6 @@ class image_feature:
         return 0
 
     def initialize_color(self):
-        
         if self.curr_cam is None:
             print("Initialize self.curr_cam")
             return
@@ -263,8 +263,9 @@ class image_feature:
  
        :return: Image with drawn lines and line angle in radians
        """
- 
+
         avg_theta = 0
+
         for line in lines:
             # Extract line info
 
@@ -293,9 +294,7 @@ class image_feature:
             avg_theta += theta
 
         avg_theta /= len(lines)
-
         final_angle = avg_theta
-
         return final_angle, orig_img
 
 def main(args):
@@ -305,7 +304,6 @@ def main(args):
     
     while not rospy.is_shutdown():
         ic.initialize_color()
-        print("Color is found")
         ic.process()
         rospy.sleep(0.05)
 

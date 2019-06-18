@@ -36,7 +36,7 @@ class control_manager:
         self.last_ok_angle = -1
         self.count = 0
 
-        self.p = 1.15 #1
+        self.p = 0.26
         self.i = 0
         self.d = 0
 
@@ -77,16 +77,18 @@ class control_manager:
 
         vel.angular.z = -(self.angle_pid.compute(math.pi/2, angle, 0.05))
 
-        #print("angular velocity:", vel.angular.z)
+        help = self.angle
 
-        vel.linear.x = 0.5
+        if help > math.pi/2:
+            help = math.pi/2 - (help - math.pi/2) 
 
-        vel.linear.x = abs((1.5 + vel.angular.z)*1.5)
+        vel.linear.x = help*0.5 - 0.1
 
-        #if vel.linear.x > 1:
-        #    vel.linear.x = 1
+        #print("vel.lin.x:", vel.linear.x)
+        #print("vel.ang.z:", vel.angular.z)
 
         return vel
+
 
 def main(args):
     '''Initializes and cleanup ros node'''
