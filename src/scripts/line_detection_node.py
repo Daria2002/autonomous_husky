@@ -90,7 +90,7 @@ class image_feature:
         y_size = len(image_np[1])
 
 
-        line_status = self.checkLine(image_np)
+        line_status = self.checkLine2(image_np)
         
         edges = cv2.Canny(image_np, 50, 150, apertureSize=3)
         minLineLength = 5      # Minimum length of line. Line segments shorter than this are rejected.
@@ -124,7 +124,7 @@ class image_feature:
             """
             
             if line_status == 1:
-                avg = avg - abs(avg) * 0.05
+                avg = avg + abs(avg) * 0.2
                 print("linija je lijevo")
 
             elif line_status == 2:
@@ -189,6 +189,66 @@ class image_feature:
         if(fourth):
             return 2
         return 0
+
+    def checkLine2(self, imageToCheck):
+        """
+        This method returns 0 if line is not on border, 1 if line is on left, 2 if line is on right
+        """
+        # line on right and left half 
+        count = 0
+
+        first = False
+        second = False
+        third = False
+        fourth = False
+
+        count1 = 0
+        count2 = 0
+
+        #for a in range(0, len(imageToCheck)):
+        for a in range(len(imageToCheck)/4, 3*len(imageToCheck)/4):
+            for b in range(0, len(imageToCheck[0])):
+                
+                if imageToCheck[a][b] != 0:
+                    if(0 <= b <= len(imageToCheck[0])/4 and first == False):
+                        first = True
+                        break
+
+                    elif(len(imageToCheck[0])/4 < b <= len(imageToCheck[0])/2):
+                        if(third == True):
+                            count = count + 1
+                        second = True
+                        count1 = count1 + 1
+                        break
+
+                    elif(len(imageToCheck[0])/2 < b <= 3*len(imageToCheck[0])/4):
+                        if(second == True):
+                            count = count + 1
+                        third = True
+                        count2 = count2 + 1
+                        break
+
+                    elif(3*len(imageToCheck[0])/4 < b <= len(imageToCheck[0]) and fourth == False):
+                        fourth = True
+                        break
+
+        print("count = ", count)
+        if count > 120:
+            return 0
+
+        if(first):
+            return 1
+
+        if(fourth):
+            return 2
+
+        if(count1 == count2):
+            return 0
+
+        if(count1 > count2):
+            return 1
+        
+        return 2
 
     def initialize_color(self):
         if self.curr_cam is None:
