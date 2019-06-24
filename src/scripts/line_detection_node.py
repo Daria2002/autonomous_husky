@@ -259,6 +259,7 @@ class image_feature:
             return
 
         np_arr = np.fromstring(self.curr_cam, np.uint8)
+
         image_np = cv2.imdecode(np_arr, cv2.COLOR_BGR2RGB)
 
         # Do the kmeans
