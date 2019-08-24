@@ -37,8 +37,8 @@ class control_manager:
         self.count = 0
 
         self.p = 0.26
-        self.i = 0
-        self.d = 0
+        self.i = 0.00001
+        self.d = 0.00001
 
         self.angle_pid = PID(self.p, self.i, self.d, 5, -5)
         self.vel = Twist()
