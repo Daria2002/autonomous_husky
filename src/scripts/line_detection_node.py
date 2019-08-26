@@ -147,8 +147,6 @@ class image_feature:
         
         edges = cv2.Canny(image_np, 50, 150)
 
-
-
         minLineLength = 5      # Minimum length of line. Line segments shorter than this are rejected.
         maxLineGap = 100          # Maximum allowed gap between line segments to treat them as single line.
         rho_precision = 1
@@ -165,10 +163,12 @@ class image_feature:
             #print("kut koji se pub ako se linije ne popravljaju:", avg)
 
             if line_status == 1:
-                avg = avg + abs(avg) * 0.2
+                #avg = avg + abs(avg) * 0.2
+                avg = avg + abs(avg) * 0.3
 
             elif line_status == 2:
-                avg = avg - abs(avg) * 0.5
+                #avg = avg - abs(avg) * 0.5
+                avg = avg - abs(avg) * 0.3
             
             #print("popravljeni kut", avg)
 
@@ -205,25 +205,25 @@ class image_feature:
             for b in range(0, len(imageToCheck[0])):
                 
                 if imageToCheck[a][b] != 0:
-                    if(0 <= b <= len(imageToCheck[0])/4 and first == False):
+                    if(0 <= b <= 3*len(imageToCheck[0])/8 and first == False):
                         first = True
                         break
 
-                    elif(len(imageToCheck[0])/4 < b <= len(imageToCheck[0])/2):
+                    elif(3*len(imageToCheck[0])/8 < b <= len(imageToCheck[0])/2):
                         if(third == True):
                             count = count + 1
                         second = True
                         count1 = count1 + 1
                         break
 
-                    elif(len(imageToCheck[0])/2 < b <= 3*len(imageToCheck[0])/4):
+                    elif(len(imageToCheck[0])/2 < b <= 5*len(imageToCheck[0])/8):
                         if(second == True):
                             count = count + 1
                         third = True
                         count2 = count2 + 1
                         break
 
-                    elif(3*len(imageToCheck[0])/4 < b <= len(imageToCheck[0]) and fourth == False):
+                    elif(5*len(imageToCheck[0])/8 < b <= len(imageToCheck[0]) and fourth == False):
                         fourth = True
                         break
 
