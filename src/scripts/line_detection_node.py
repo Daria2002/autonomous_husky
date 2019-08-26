@@ -143,7 +143,7 @@ class image_feature:
         y_size = len(image_np[1])
 
 
-        line_status = self.checkLine2(image_np)
+        line_status = self.check_line(image_np)
         
         edges = cv2.Canny(image_np, 50, 150)
 
@@ -185,50 +185,7 @@ class image_feature:
         self.publish_img(img, self.image_pub)
         #self.subscriber.unregister()
 
-    def checkLine(self, imageToCheck):
-        """
-        This method returns 0 if line is not on border, 1 if line is on left, 2 if line is on right
-        """
-        # line on right and left half 
-        count = 0
-
-        first = False
-        second = False
-        third = False
-        fourth = False
-
-        #for a in range(0, len(imageToCheck)):
-        for a in range(len(imageToCheck)/4, 3*len(imageToCheck)/4):
-            for b in range(0, len(imageToCheck[0])):
-                
-                if imageToCheck[a][b] != 0:
-                    if(0 <= b <= len(imageToCheck[0])/4 and first == False):
-                        first = True
-                        break
-
-                    elif(len(imageToCheck[0])/4 < b <= len(imageToCheck[0])/2 and second == False):
-                        if(third == True):
-                            return 0
-                        second = True
-                        break
-
-                    elif(len(imageToCheck[0])/2 < b <= 3*len(imageToCheck[0])/4 and third == False):
-                        if(second == True):
-                            return 0
-                        third = True
-                        break
-
-                    elif(3*len(imageToCheck[0])/4 < b <= len(imageToCheck[0]) and fourth == False):
-                        fourth = True
-                        break
-
-        if(first):
-            return 1
-        if(fourth):
-            return 2
-        return 0
-
-    def checkLine2(self, imageToCheck):
+    def check_line(self, imageToCheck):
         """
         This method returns 0 if line is not on border, 1 if line is on left, 2 if line is on right
         """
