@@ -72,6 +72,7 @@ class image_feature:
         self.kmeans_iter = 0
         self.image_printed = False
         self.camera_image_showed = False
+        self.color_initilized_printed = False
             
     def k_means_plot(self, data):
         x=data[:,0]
@@ -114,34 +115,21 @@ class image_feature:
             self.publish_angle(-1)
             return
 
+        if not self.color_initilized_printed:
+            print("Color initialized")
+            self.color_initilized_printed = True
+
         #### direct conversion to CV2 ####
         np_arr = np.fromstring(self.curr_cam, np.uint8)
 
         image_np = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-
-        """
-        if(self.camera_image_showed == False):
-            self.show_image(image_np)
-            self.camera_image_showed = True
-        """
-
-        #cv2.imshow('cv_img', image_np)
-        #cv2.waitKey(2)
+        
+        # to show camera image uncomment next line
+        # self.show_image(image_np)
 
         w, h = image_np.shape[:2]
         #image_np = image_np[h/2:h, 0:w].copy()
         image_orig = image_np
-
-
-
-        """
-        try:
-            if(self.image_printed == False):
-                self.array_to_image(image_np)
-                self.image_printed = True
-        except:
-            print("An exception occurred")
-        """
         
         thresh = 20
         colorLower = (self.color[0] - thresh, self.color[1] - thresh, self.color[2] - thresh)
@@ -167,19 +155,6 @@ class image_feature:
         theta_precision = np.pi / 180
         vote_count = 50
 
-        
-        #plt.subplot(122),plt.imshow(edges,cmap = 'gray')
-        #plt.title('Slika nakon Canny postupka'), plt.xticks([]), plt.yticks([])
-        #plt.show()
-
-        """
-        try:
-            if(self.image_printed == False):
-                self.print_array(image_np)
-                self.image_printed = True
-        except:
-            print("An exception occurred")
-        """
         lines = cv2.HoughLines(edges, rho_precision, theta_precision, vote_count) # minLineLength, maxLineGap)
         # If no lines are found punish and continue
         if lines is None:
@@ -207,11 +182,7 @@ class image_feature:
 
             return
 
-        cv2.imshow('after_hough', img)
-        cv2.waitKey(2)
-
         self.publish_img(img, self.image_pub)
-        #print(avg)
         #self.subscriber.unregister()
 
     def checkLine(self, imageToCheck):
