@@ -82,8 +82,8 @@ class control_manager:
         if help > math.pi/2:
             help = math.pi/2 - (help - math.pi/2) 
 
-        vel.linear.x = help*0.5 - 0.1
-
+        #vel.linear.x = help*0.5 - 0.1
+        vel.linear.x = help*0.4
         #print("vel.lin.x:", vel.linear.x)
         #print("vel.ang.z:", vel.angular.z)
 
