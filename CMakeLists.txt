@@ -9,8 +9,4 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 
-include_directories(
-# include
-  ${catkin_INCLUDE_DIRS}
-  ${OpenCV_INCLUDE_DIRS}
-)
+catkin_package()
